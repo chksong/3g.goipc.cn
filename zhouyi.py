@@ -31,7 +31,7 @@ class BaseHandle(tornado.web.RequestHandler):
 
 class IndexHandler(BaseHandle):
     def get(self, *args, **kwargs):
-        self.render("index.html")
+        self.render("index.html",lorm="xxxxx")
 
 
 class Application(tornado.web.Application):
