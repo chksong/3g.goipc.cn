@@ -33,14 +33,22 @@ class IndexHandler(BaseHandle):
     def get(self, *args, **kwargs):
         self.render("index.html",lorm="xxxxx")
 
+class TestFullIndex(tornado.web.RequestHandler):
+    def get(self, *args, **kwargs):
+        return  self.write('<html><body><form action="/login" method="post">'
+                   'Name: <input type="text" name="name">'
+                   '<input type="submit" value="Sign in">'
+                   '</form></body></html>')
 
 class Application(tornado.web.Application):
     def  __init__(self):
         handlers = [
             (r"/",IndexHandler),
+            (r"/v2/test",TestFullIndex)
         ]
         setting =dict (
-            blog_title=u"周易App",
+            blog_title=u"北京国信智维科技有限公司",
+            blog_nav_First=u"主页",
             template_path=os.path.join(os.path.dirname(__file__),"templates"),
             static_path=os.path.join(os.path.dirname(__file__),"static"),
             xsrf_cookires=True,

@@ -1,21 +1,31 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+
+<html lang="zh-cn">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>{{ escape(handler.settings["blog_title"]) }}</title>
-    <link rel="stylesheet" href="{{ static_url("site.css") }}" type="text/css"/>
+
     <link rel="stylesheet" href="{{ static_url("bootstrap/css/bootstrap.css") }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ static_url("stickup.css") }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ static_url("site.css") }}" type="text/css"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
     <link rel="alternate" href="/feed" type="application/atom+xml" title="{{ escape(handler.settings["blog_title"]) }}"/>
     {% block head %}{% end %}
   </head>
   <body>
 
-     {% include nav_menu.html %}
 
-
-
-
-    <div id="body">
       <div id="header">
         <div style="float:right">
           {% if current_user %}
@@ -25,16 +35,37 @@
             {% raw _('<a href="%(url)s">Sign in</a> to compose/edit') % {"url": "/auth/login?next=" + url_escape(request.uri)} %}
           {% end %}
         </div>
-        <h1><a href="/">{{ escape(handler.settings["blog_title"]) }}</a></h1>
+        <div class="container">
+              <h1><a href="/">{{ escape(handler.settings["blog_title"]) }}</a></h1>
+        </div>
       </div>
-    </div>
 
-     <div id="content">{% block body %}{% end %}</div>
+     {% include nav_menu.html %}
 
-    {% block bottom %}{% end %}
+     {% block body %}{% end %}
+
+    {% block footer %}{% end %}
 
     <script src="{{static_url("jquery/jquery-1.11.2.min.js") }}"> </script>
+
     <script src="{{static_url("bootstrap/js/bootstrap.js") }}"> </script>
+
+
+
+
+    <script src="{{static_url("jquery/stickUp.js") }}"> </script>
+    <script type="text/javascript">
+      //initiating jQuery
+      jQuery(function($) {
+        $(document).ready( function() {
+          //enabling stickUp on the '.navbar-wrapper' class
+          $('.navbar-wrapper').stickUp({
+              marginTop: 'auto'
+          });
+        });
+      });
+
+    </script>
   </body>
 
 
