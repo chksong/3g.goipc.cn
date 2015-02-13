@@ -1,27 +1,22 @@
 
 <html lang="zh-cn">
   <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{{ escape(handler.settings["blog_title"]) }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{{ static_url("bootstrap/css/bootstrap.css") }}" type="text/css"/>
-    <link rel="stylesheet" href="{{ static_url("stickup.css") }}" type="text/css"/>
-    <link rel="stylesheet" href="{{ static_url("site.css") }}" type="text/css"/>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+     <!-- Bootstrap css file v2.2.1 -->
+    <link rel="stylesheet" type="text/css" href="{{static_url("bootstrap/css/bootstrap.min.css")}}">
+    <link href="{{static_url("bootstrap/css/bootstrap-responsive.css")}}" rel="stylesheet">
 
 
+    <link rel="stylesheet" href="{{ static_url("stickup.css")}}" type="text/css"/>
+    <link rel="stylesheet" href="{{ static_url("site.css")}}" type="text/css"/>
 
-    <link rel="alternate" href="/feed" type="application/atom+xml" title="{{ escape(handler.settings["blog_title"]) }}"/>
-    {% block head %}{% end %}
+
+     {% block head %}{% end %}
   </head>
   <body>
 
@@ -40,18 +35,26 @@
         </div>
       </div>
 
-     {% include nav_menu.html %}
+     {% include nav_menu_bs_v2.html %}
 
      {% block body %}{% end %}
 
     {% block footer %}{% end %}
 
     <script src="{{static_url("jquery/jquery-1.11.2.min.js") }}"> </script>
+    <script type="text/javascript" src="{{static_url("bootstrap/js/bootstrap.js")}}"></script>
 
-    <script src="{{static_url("bootstrap/js/bootstrap.js") }}"> </script>
-
-
-
+    <!--[if lte IE 6]>
+    <!-- bsie js 补丁只在IE6中才执行 -->
+    <script type="text/javascript" src="{{static_url("bootstrap/js/bootstrap-ie.js")}}"></script>
+    <![endif]-->
+    <script type="text/javascript">
+    (function ($) {
+      $(document).ready(function() {
+        if ($.isFunction($.bootstrapIE6)) $.bootstrapIE6($(document));
+      });
+    })(jQuery);
+    </script>
 
     <script src="{{static_url("jquery/stickUp.js") }}"> </script>
     <script type="text/javascript">

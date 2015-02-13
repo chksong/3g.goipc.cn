@@ -6,13 +6,15 @@
 
 
 import  os.path
-import  re
 import  tornado
 import  tornado.auth
 import  tornado.httpserver
 import  tornado.ioloop
 import  tornado.web
 import  tornado.options
+
+import  common
+import  admin
 
 from tornado.options import define, options
 
@@ -24,14 +26,13 @@ define("mysql_password", default="blog", help="blog database password")
 
 
 
-class BaseHandle(tornado.web.RequestHandler):
-    @property
-    def db(self):
-        return  self.application.db
 
-class IndexHandler(BaseHandle):
+
+class IndexHandler(common.BaseHandle):
     def get(self, *args, **kwargs):
         self.render("index.html",lorm="xxxxx")
+
+
 
 class TestFullIndex(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
@@ -44,7 +45,8 @@ class Application(tornado.web.Application):
     def  __init__(self):
         handlers = [
             (r"/",IndexHandler),
-            (r"/v2/test",TestFullIndex)
+            (r"/v2/test",TestFullIndex),
+            (r"/test", admin.AdminIndex)
         ]
         setting =dict (
             blog_title=u"北京国信智维科技有限公司",
