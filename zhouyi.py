@@ -46,7 +46,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/",IndexHandler),
             (r"/v2/test",TestFullIndex),
-            (r"/test", admin.AdminIndex)
+            (r"/admin", admin.AdminIndex)
         ]
         setting =dict (
             blog_title=u"北京国信智维科技有限公司",

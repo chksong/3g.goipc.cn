@@ -14,4 +14,4 @@ class TestHandler(tornado.web.RequestHandler):
 
 class AdminIndex(common.BaseHandle):
     def get(self):
-         self.render("index.html",lorm="xxxxx")
+         self.render("admin.index.html",lorm="xxxxx")

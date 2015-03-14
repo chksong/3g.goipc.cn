@@ -21,40 +21,16 @@
   <body>
 
 
-      <div id="header">
-        <div style="float:right">
-          {% if current_user %}
-            <a href="/compose">{{ _("New post") }}</a> -
-            <a href="/auth/logout?next={{ url_escape(request.uri) }}">{{ _("Sign out") }}</a>
-          {% else %}
-            {% raw _('<a href="%(url)s">Sign in</a> to compose/edit') % {"url": "/auth/login?next=" + url_escape(request.uri)} %}
-          {% end %}
-        </div>
-        <div class="container">
-              <h1><a href="/">{{ escape(handler.settings["blog_title"]) }}</a></h1>
-        </div>
-      </div>
+
 
      {% include nav_menu_bs_v2.html %}
 
      {% block body %}{% end %}
 
-    {% block footer %}{% end %}
+     {% block footer %}{% end %}
 
     <script src="{{static_url("jquery/jquery-1.11.2.min.js") }}"> </script>
     <script type="text/javascript" src="{{static_url("bootstrap/js/bootstrap.js")}}"></script>
-
-    <!--[if lte IE 6]>
-    <!-- bsie js 补丁只在IE6中才执行 -->
-    <script type="text/javascript" src="{{static_url("bootstrap/js/bootstrap-ie.js")}}"></script>
-    <![endif]-->
-    <script type="text/javascript">
-    (function ($) {
-      $(document).ready(function() {
-        if ($.isFunction($.bootstrapIE6)) $.bootstrapIE6($(document));
-      });
-    })(jQuery);
-    </script>
 
     <script src="{{static_url("jquery/stickUp.js") }}"> </script>
     <script type="text/javascript">
