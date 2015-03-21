@@ -15,36 +15,23 @@
     <link rel="stylesheet" href="{{ static_url("stickup.css")}}" type="text/css"/>
     <link rel="stylesheet" href="{{ static_url("site.css")}}" type="text/css"/>
 
+     <script src="{{static_url("jquery/jquery-1.11.2.min.js") }}"> </script>
 
-     {% block head %}{% end %}
+    {% block head %}{% end %}
+
   </head>
   <body>
 
-
-
-
-     {% include nav_menu_bs_v2.html %}
 
      {% block body %}{% end %}
 
      {% block footer %}{% end %}
 
-    <script src="{{static_url("jquery/jquery-1.11.2.min.js") }}"> </script>
+
     <script type="text/javascript" src="{{static_url("bootstrap/js/bootstrap.js")}}"></script>
 
-    <script src="{{static_url("jquery/stickUp.js") }}"> </script>
-    <script type="text/javascript">
-      //initiating jQuery
-      jQuery(function($) {
-        $(document).ready( function() {
-          //enabling stickUp on the '.navbar-wrapper' class
-          $('.navbar-wrapper').stickUp({
-              marginTop: 'auto'
-          });
-        });
-      });
 
-    </script>
+    {% block endJs  %}  {% end %}
   </body>
 
 

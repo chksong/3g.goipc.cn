@@ -37,7 +37,37 @@
     </style>
 
 
-   <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+
+
+
+
+
+{% end %}
+
+
+
+{% block body %}
+
+<div class="container">
+    <form class="form-signin" id="login-form" action="/admin/checklogin">
+        <h2 class="form-signin-heading" >请登录..</h2>
+
+        <input type="text" id="username" name="username"  class="input-block-level" placeholder="user@goipc.cn"><br/>
+        <input type="password" id="passwd" name="passwd" class="input-block-level" placeholder="Password"><br/>
+        <label class="checkbox"> <input type="checkbox" value="Remember me"> 记住信息 </label>
+        <div id="result"></div>
+        <button class="btn btn-large btn-primary" type="submit">登录</button>
+    </form>
+
+</div>
+
+{% end %}
+
+
+{% block endJs  %}
+
+
+ <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 
     <script>
        $().ready(function() {
@@ -48,7 +78,7 @@
                     minlength :5
                 },
 
-                passwd1: {
+                passwd: {
                     required: true,
                     minlength: 5
                 },
@@ -61,7 +91,7 @@
                    minlength: "用户名长度不能小于六位"
                 },
 
-                passwd1: {
+                passwd: {
                     required: "请填写密码",
                     minlength: "密码的长度不能小于六位"
                 },
@@ -74,27 +104,26 @@
 
     </script>
 
-{% end %}
+    <script>
+
+    $("#login-form").submit(function(event) {
 
 
-
-{% block body %}
-
-<div class="container">
-    <form class="form-signin" id="login-form">
-        <h2 class="form-signin-heading" >请登录..</h2>
-
-        <input type="text" id="username" name="username"  class="input-block-level" placeholder="user@goipc.cn"><br/>
-        <input type="password" id="passwd1" name="passwd1" class="input-block-level" placeholder="Password"><br/>
-        <label class="checkbox"> <input type="checkbox" value="Remember me"> 记住信息 </label>
-
-        <button class="btn btn-large btn-primary" type="submit">登录</button>
-    </form>
-</div>
-
-{% end %}
+      event.preventDefault();
 
 
-{% block endJs  %}
+      var $form = $( this ),
+          username = $form.find( 'input[name="username"]' ).val(),
+          passwd = $form.find( 'input[name="passwd"]' ).val(),
+          url = $form.attr( 'action' );
 
+
+      $.post( url, { username: username , passwd: passwd },
+        function( data ) {
+            var content = $( data ).find( 'content' );
+            $( "#result" ).empty().append( data["content"] );
+        },"json"
+      );
+    });
+    </script>
 {% end %}
