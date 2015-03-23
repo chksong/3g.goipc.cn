@@ -49,12 +49,12 @@
 {% block body %}
 
 <div class="container">
-    <form class="form-signin" id="login-form" action="/admin/checklogin">
+    <form class="form-signin" id="login-form" action="/admin/login" method="POST">
+         {% module xsrf_form_html() %}
         <h2 class="form-signin-heading" >请登录..</h2>
 
         <input type="text" id="username" name="username"  class="input-block-level" placeholder="user@goipc.cn"><br/>
         <input type="password" id="passwd" name="passwd" class="input-block-level" placeholder="Password"><br/>
-        <label class="checkbox"> <input type="checkbox" value="Remember me"> 记住信息 </label>
         <div id="result"></div>
         <button class="btn btn-large btn-primary" type="submit">登录</button>
     </form>
@@ -97,33 +97,17 @@
                 },
             },
 
-            submitHandler: function(form) {
+             submitHandler: function(form) {
+                form.submit();
             }
+
+
         });
      });
 
     </script>
 
-    <script>
-
-    $("#login-form").submit(function(event) {
 
 
-      event.preventDefault();
 
-
-      var $form = $( this ),
-          username = $form.find( 'input[name="username"]' ).val(),
-          passwd = $form.find( 'input[name="passwd"]' ).val(),
-          url = $form.attr( 'action' );
-
-
-      $.post( url, { username: username , passwd: passwd },
-        function( data ) {
-            var content = $( data ).find( 'content' );
-            $( "#result" ).empty().append( data["content"] );
-        },"json"
-      );
-    });
-    </script>
 {% end %}

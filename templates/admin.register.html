@@ -38,9 +38,35 @@
 
 
 
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 
-    <script>
+
+{% end %}
+
+
+
+{% block body %}
+
+<div class="container">
+    <form class="form-signin" id="register-form" >
+        <h2 class="form-signin-heading">注册用户..</h2>
+        <input type="text" id="username" name="username" class="input-block-level " placeholder="用户名"><br/>
+        <input type="password" id="passwd1" name="passwd1" class="input-block-level " placeholder="密码"><br/>
+        <input type="password" id="passwd2" name="passwd1" class="input-block-level " placeholder="检验密码"><br/>
+
+        <button class="btn btn-large btn-primary" type="submit">登录</button>
+    </form>
+</div>
+
+{% end %}
+
+
+
+
+{% block endJs  %}
+
+     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+
+    <script type="text/javascript">
 
 
     // Setup form validation on the #register-form element
@@ -90,29 +116,26 @@
 
     </script>
 
-{% end %}
+    <script>
+    $("#login-form").submit(function(event) {
 
 
-
-{% block body %}
-
-<div class="container">
-    <form class="form-signin" id="register-form" >
-        <h2 class="form-signin-heading">注册用户..</h2>
-        <input type="text" id="username" name="username" class="input-block-level " placeholder="用户名"><br/>
-        <input type="password" id="passwd1" name="passwd1" class="input-block-level " placeholder="密码"><br/>
-        <input type="password" id="passwd2" name="passwd1" class="input-block-level " placeholder="检验密码"><br/>
-
-        <button class="btn btn-large btn-primary" type="submit">登录</button>
-    </form>
-</div>
-
-{% end %}
+      event.preventDefault();
 
 
+      var $form = $( this ),
+          username = $form.find( 'input[name="username"]' ).val(),
+          passwd = $form.find( 'input[name="passwd"]' ).val(),
+          url = $form.attr( 'action' );
 
 
-{% block endJs  %}
-
+      $.post( url, { username: username , passwd: passwd },
+        function( data ) {
+            var content = $( data ).find( 'content' );
+            $( "#result" ).empty().append( data["content"] );
+        },"json"
+      );
+    });
+    </script>
 
 {% end %}
