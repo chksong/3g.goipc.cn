@@ -5,6 +5,8 @@
 #
 # 后台管理的部门
 
+import  logging
+
 import tornado
 import tornado.web
 
@@ -16,4 +18,11 @@ class BaseHandle(tornado.web.RequestHandler):
         return  self.application.db
 
     def get_current_user(self):
-        return  self.get_secure_cookie("admin_user")
+        return  self.get_secure_cookie("user")
+
+    def get_admin_user(self):
+        return  self.get_secure_cookie("adminuser")
+
+    def on_connection_close(self):
+        logging.debug("[on_connection_close]")
+        self.clear_all_cookies();
