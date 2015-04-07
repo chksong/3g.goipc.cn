@@ -28,7 +28,7 @@ class AdminIndex(common.BaseHandle):
             self.redirect("/admin/login")
             return
 
-        self.render("/admin/index.html",name=admin_user)
+        self.render("admin/index.html",name=admin_user)
 
 
 class AdminLogout(common.BaseHandle):
@@ -68,6 +68,8 @@ class AdminLogin(common.BaseHandle):
         if PasswordCrypto.authenticate(admin_pass,encryped_pass):
             token = get_random_string()
             self.update_admin_salt(result_user["_id"],token)
+            self.update_admin_token_time(result_user["_id"])
+
             token_id = token + "/"  + str(result_user["_id"])
             self.set_secure_cookie("token_id",str(token_id))
         else:

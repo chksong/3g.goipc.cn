@@ -42,7 +42,7 @@ class BaseHandle(tornado.web.RequestHandler, AdminMixin):
 
         now_diff = datetime.datetime.utcnow() - db_admin["token_time"]
         #证书超时
-        if now_diff > datetime.timedelta(hours =1 ):
+        if now_diff > datetime.timedelta(hours =5 ):
             print "证书超时。"
             rand_string = get_random_string()
             self.update_admin_salt(admin_id ,rand_string)
