@@ -6,17 +6,19 @@
 
 
 import  os.path
+
 import  tornado
 import  tornado.auth
 import  tornado.httpserver
 import  tornado.ioloop
 import  tornado.web
 import  tornado.options
-
-import  common
-import  admin
-
+import  pymongo
 from tornado.options import define, options
+
+import  admin
+from lib import common
+
 
 define("port",default=8888,help="run on the given port", type=int)
 define("mysql_host", default="127.0.0.1:3306", help="blog database host")
@@ -44,12 +46,13 @@ class TestFullIndex(tornado.web.RequestHandler):
 class Application(tornado.web.Application):
     def  __init__(self):
         handlers = [
-            (r"^$",IndexHandler),
+
             (r"/",IndexHandler),
             (r"/v2/test",TestFullIndex),
             (r"^/admin.?$", admin.AdminIndex),
-            (r"/admin/login",admin.AdminLogin),
+            (r"/admin/login.?$",admin.AdminLogin),
             (r"^/admin/logout.?$",admin.AdminLogout),
+            (r"^$",IndexHandler),
         ]
         setting =dict (
             blog_title=u"北京国信智维科技有限公司",
@@ -62,6 +65,8 @@ class Application(tornado.web.Application):
             debug=True,
         )
         tornado.web.Application.__init__(self,handlers, **setting)
+        self.db = pymongo.Connection('localhost',27017).goipc
+
 
 
 def main():
