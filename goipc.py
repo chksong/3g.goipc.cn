@@ -52,7 +52,7 @@ class Application(tornado.web.Application):
             (r"^/admin.?$", admin.AdminIndex),
             (r"/admin/login.?$",admin.AdminLogin),
             (r"^/admin/logout.?$",admin.AdminLogout),
-            (r"^$",IndexHandler),
+            #(r"^$",IndexHandler),
         ]
         setting =dict (
             blog_title=u"北京国信智维科技有限公司",
