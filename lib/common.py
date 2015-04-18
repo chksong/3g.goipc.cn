@@ -46,6 +46,7 @@ class BaseHandle(tornado.web.RequestHandler, AdminMixin):
             print "证书超时。"
             rand_string = get_random_string()
             self.update_admin_salt(admin_id ,rand_string)
+            self.update_admin_token_time(admin_id)
             self.clear_cookie("token")
             self.redirect("/")
         else :
