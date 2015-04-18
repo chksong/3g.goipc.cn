@@ -52,6 +52,7 @@ class Application(tornado.web.Application):
             (r"^/admin.?$", admin.AdminIndex),
             (r"/admin/login.?$",admin.AdminLogin),
             (r"^/admin/logout.?$",admin.AdminLogout),
+            (r"^/admin/category.?$" ,admin.AdminCategory),
             #(r"^$",IndexHandler),
         ]
         setting =dict (

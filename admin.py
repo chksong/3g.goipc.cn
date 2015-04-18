@@ -10,6 +10,7 @@ import  re
 
 import  tornado
 import  tornado.escape
+import  functools
 
 from lib import common
 from lib.crypto import PasswordCrypto
@@ -23,19 +24,20 @@ class TestHandler(tornado.web.RequestHandler):
 
 class AdminIndex(common.BaseHandle):
     def get(self):
-        admin_user = tornado.escape.json_encode(self.get_admin_user())
-        if  admin_user == "null"  :
+        admin_user = self.get_admin_user()
+        if  not admin_user  :
             self.redirect("/admin/login")
             return
 
-        self.render("admin/index.html",name=admin_user)
+        self.render("admin/index.html",admin_user=admin_user)
 
-
+#退出
 class AdminLogout(common.BaseHandle):
     def get(self):
         self.clear_cookie("adminuser")
     def post(self):
         self.clear_cookie("adminuser")
+
 
 class AdminLogin(common.BaseHandle):
     def get(self):
@@ -90,3 +92,28 @@ class AdminRegister(common.BaseHandle):
     def get(self):
         self.render("admin.register.html")
 
+##### 认证的通用的函数
+def authenticated(method):
+    """Decorate methods with this to require that the user be logged in."""
+    @functools.wraps(method)
+    def wrapper(self, *args, **kwargs):
+        if not self.get_admin_user():
+            if self.request.method in ("GET", "HEAD"):
+                self.redirect("/")
+                return
+            self.abort(403)
+        return method(self, *args, **kwargs)
+    return wrapper
+
+
+class AdminCategory(common.BaseHandle):
+    def get(self):
+        admin_user = self.get_admin_user()
+        if  not admin_user:
+            self.redirect("/")
+            return
+
+        self.render("admin/category.html",admin_user=admin_user)
+
+    def post(self):
+        pass
