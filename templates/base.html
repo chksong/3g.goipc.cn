@@ -1,24 +1,31 @@
 
-<html lang="zh-cn">
+<html >
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <title> {{ escape(handler.settings["blog_title"]) }}</title>
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <title>{{ escape(handler.settings["blog_title"]) }}</title>
-
-    <!--   暂时取消 响应式特性
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+     <link rel="stylesheet" media="screen" href="{{static_url("bootstrap/css/bootstrap.min.css")}}">
+
+     <!-- 启用响应式特性
+     <link rel="stylesheet" media="screen" href="{{static_url("bootstrap/css/bootstrap-responsive.min.css")}}">
     -->
 
-     <!-- Bootstrap css file v2.2.1 -->
-    <link rel="stylesheet" type="text/css" href="{{static_url("bootstrap/css/bootstrap.min.css")}}">
-    <link href="{{static_url("bootstrap/css/bootstrap-responsive.css")}}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{{static_url("js/html5shiv.min.js")}}"></script>
+    <![endif]-->
 
-
+    <!--- 暂时注释掉
     <link rel="stylesheet" href="{{ static_url("stickup.css")}}" type="text/css"/>
-    <link rel="stylesheet" href="{{ static_url("site.css")}}" type="text/css"/>
+    -->
+    <link rel="stylesheet" href="{{ static_url("css/docs.css")}}" type="text/css"/>
+    <link rel="stylesheet" href="{{ static_url("css/site.css")}}" type="text/css"/>
 
-     <script src="{{static_url("jquery/jquery-1.11.2.min.js") }}"> </script>
+
 
     {% block head %}{% end %}
 
@@ -30,15 +37,10 @@
 
      {% block footer %}{% end %}
 
-
-    <script type="text/javascript" src="{{static_url("bootstrap/js/bootstrap.js")}}"></script>
-
-
+    <script type="text/javascript" src="{{static_url("js/jquery-1.11.2.min.js")}}" />
+    <script type="text/javascript" src="{{static_url("bootstrap/js/bootstrap.min.js")}}" />
     {% block endJs  %}  {% end %}
   </body>
-
-
-
 
 </html>
 
