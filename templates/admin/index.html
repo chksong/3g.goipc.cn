@@ -2,8 +2,7 @@
 
 {% block body %}
     {% include nav_menu_admin.html  %}
-
-
+    {% include admin_main.html %}
 {% end %}
 
 
@@ -19,9 +18,6 @@
             //return '您输入的内容尚未保存，确定离开此页面吗？';
              $.post( "/admin/logout");
              });
-
-
-
 
         </script>
 {% end %}
