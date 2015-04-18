@@ -1,0 +1,31 @@
+{% block admin_top_menu %}
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" >国信智维管理后台</a>
+
+          <div class="nav-collapse collapse ">
+            <ul class="nav ">
+
+              <li class="">
+                <a href="/admin/category">分类管理</a>
+              </li>
+              <li class="">
+                <a href="">产品管理</a>
+              </li>
+              <li class="menu-item-right"> <a href="">管理员: {{admin_user }} </a> </li>
+            </ul>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+ {% end %}

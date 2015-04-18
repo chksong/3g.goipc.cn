@@ -1,0 +1,40 @@
+{% extends "../base.html" %}
+
+{% block body %}
+    {% include admin_nav_menu.html  %}
+
+<div class="container">
+  <div class="row-fluid">
+
+    <!--Sidebar content-->
+    <div class="span3  bs-docs-sidebar">
+       <ul class="nav nav-list bs-docs-sidenav affix">
+          <li class=""><a href="#global"><i class="icon-chevron-right"></i> 全局样式表</a></li>
+          <li class=""><a href="#gridSystem"><i class="icon-chevron-right"></i> 栅格系统</a></li>
+          <li class=""><a href="#fluidGridSystem"><i class="icon-chevron-right"></i> 流式栅格系统</a></li>
+          <li class="active"><a href="#layouts"><i class="icon-chevron-right"></i> 布局</a></li>
+          <li><a href="#responsive"><i class="icon-chevron-right"></i> 响应式设计</a></li>
+        </ul>
+    </div>
+    <div class="span9">
+      <!--Body content-->
+    </div>
+  </div>
+</div>
+{% end %}
+
+
+{% block footer %}
+
+{% end %}
+
+
+{% block endJs  %}
+        <script>
+            $(window).bind('beforeunload',function(){
+            //return '您输入的内容尚未保存，确定离开此页面吗？';
+             $.post( "/admin/logout");
+             });
+
+        </script>
+{% end %}
