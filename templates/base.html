@@ -11,9 +11,9 @@
 
      <link rel="stylesheet" media="screen" href="{{static_url("bootstrap/css/bootstrap.min.css")}}">
 
-     <!-- 启用响应式特性
+     <!-- 禁用/启用响应式特性
      <link rel="stylesheet" media="screen" href="{{static_url("bootstrap/css/bootstrap-responsive.min.css")}}">
-    -->
+     -->
 
     <!--[if lt IE 9]>
     <script src="{{static_url("js/html5shiv.min.js")}}"></script>
@@ -37,8 +37,8 @@
 
      {% block footer %}{% end %}
 
-    <script type="text/javascript" src="{{static_url("js/jquery-1.11.2.min.js")}}" />
-    <script type="text/javascript" src="{{static_url("bootstrap/js/bootstrap.min.js")}}" />
+    <script type="text/javascript" src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+    <script type="text/javascript" src="{{static_url("bootstrap/js/bootstrap.min.js")}}" ></script>
     {% block endJs  %}  {% end %}
   </body>
 
