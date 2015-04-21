@@ -3,7 +3,7 @@
 # Copyright 2009 chksong
 #  chksong@qq.com
 #
-# 后台管理的部门
+#
 
 import  logging
 
@@ -53,3 +53,5 @@ class BaseHandle(tornado.web.RequestHandler, AdminMixin):
             return db_admin["name"]
 
 
+    def get_error_html(self, status_code, **kwargs):
+        print "[get_error_html]  ......."

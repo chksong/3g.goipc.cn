@@ -9,18 +9,44 @@
     <!--Sidebar content-->
     <div class="span3  bs-docs-sidebar">
        <ul class="nav nav-list bs-docs-sidenav affix">
-          <li class=""><a href="#global"><i class="icon-chevron-right"></i> 全局样式表</a></li>
+          <li class=""><a href="#brand"  data-toggle="modal"> <i class="icon-chevron-right"></i>添加品牌</a></li>
           <li class=""><a href="#gridSystem"><i class="icon-chevron-right"></i> 栅格系统</a></li>
           <li class=""><a href="#fluidGridSystem"><i class="icon-chevron-right"></i> 流式栅格系统</a></li>
           <li class="active"><a href="#layouts"><i class="icon-chevron-right"></i> 布局</a></li>
           <li><a href="#responsive"><i class="icon-chevron-right"></i> 响应式设计</a></li>
         </ul>
     </div>
+
     <div class="span9">
       <!--Body content-->
+       <div >
+
+
+
     </div>
   </div>
 </div>
+
+
+    <!-- Modal 添加品牌对话  -->
+    <div id="brand" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">添加品牌分类</h3>
+        </div>
+        <div class="modal-body">
+             <form class="" id="brand-form" >
+                <input type="text" id="brandname" name="brandname" class="input-block-level " placeholder="研华工控产品"><br/>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal" >关闭</a>
+            <a href="#" class="btn btn-primary" id="btnAddBand">添加</a>
+      </div>
+    </div>
+    <!-- Modal 添加品牌对话  end-->
+
+
 {% end %}
 
 
@@ -30,11 +56,50 @@
 
 
 {% block endJs  %}
+
         <script>
             $(window).bind('beforeunload',function(){
             //return '您输入的内容尚未保存，确定离开此页面吗？';
              $.post( "/admin/logout");
              });
+
+        </script>
+
+        <script type="text/javascript" src="{{static_url("js/jquery.validate.min.js")}}"></script>
+
+        <script type="text/javascript">
+           $().ready(  function() {
+               $("#brand-form").validate({
+                    rules: {
+                        brandname: {
+                            required:true,
+                            minlength :6
+                        },
+                    },
+                    messages: {
+                        brandname: {
+                           required: "请填写产品分类名称",
+                           minlength: "产品分类长度不能小于六位"
+                        },
+                    },
+
+
+                });
+            });
+        </script>
+
+
+         <script>
+
+
+            $( "#btnAddBand" ).click(function() {
+              var $form = $( "#brand-form" );
+
+               brandname = $form.find( 'input[name="brandname"]' ).val(),
+
+                console.log("#brand-form validate  === ", $form.valid() , brandname)
+
+            });
 
         </script>
 {% end %}
