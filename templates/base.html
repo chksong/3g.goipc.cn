@@ -2,11 +2,10 @@
 <html >
   <head>
     <meta charset="utf-8">
-
-    <title> {{ escape(handler.settings["blog_title"]) }}</title>
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> {{ escape(handler.settings["blog_title"]) }}</title>
 
 
      <link rel="stylesheet" media="screen" href="{{static_url("bootstrap/css/bootstrap.min.css")}}">
@@ -20,7 +19,7 @@
     <![endif]-->
 
     <!--- 暂时注释掉
-    <link rel="stylesheet" href="{{ static_url("stickup.css")}}" type="text/css"/>
+    <link rel="stylesheet" href="{{ static_url("css/stickup.css")}}" type="text/css"/>
     -->
     <link rel="stylesheet" href="{{ static_url("css/docs.css")}}" type="text/css"/>
     <link rel="stylesheet" href="{{ static_url("css/site.css")}}" type="text/css"/>

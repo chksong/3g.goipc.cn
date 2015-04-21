@@ -6,17 +6,20 @@
 
 
 import  os.path
-
 import  tornado
 import  tornado.auth
 import  tornado.httpserver
 import  tornado.ioloop
-import  tornado.web
+import  tornado.web as Web
 import  tornado.options
 import  pymongo
 from tornado.options import define, options
+from  tornado.log import  access_log
 
-import  admin
+
+import admin.admin as adminuser
+import admin.category as category
+
 from lib import common
 
 
@@ -36,23 +39,17 @@ class IndexHandler(common.BaseHandle):
 
 
 
-class TestFullIndex(tornado.web.RequestHandler):
-    def get(self, *args, **kwargs):
-        return  self.write('<html><body><form action="/login" method="post">'
-                   'Name: <input type="text" name="name">'
-                   '<input type="submit" value="Sign in">'
-                   '</form></body></html>')
 
 class Application(tornado.web.Application):
     def  __init__(self):
         handlers = [
 
             (r"/",IndexHandler),
-            (r"/v2/test",TestFullIndex),
-            (r"^/admin.?$", admin.AdminIndex),
-            (r"/admin/login.?$",admin.AdminLogin),
-            (r"^/admin/logout.?$",admin.AdminLogout),
-            (r"^/admin/category.?$" ,admin.AdminCategory),
+
+            (r"^/admin.?$", adminuser.AdminIndex),
+            (r"/admin/login.?$", adminuser.AdminLogin),
+            (r"^/admin/logout.?$", adminuser.AdminLogout),
+            (r"^/admin/category.?$" , category.listCategory),
             #(r"^$",IndexHandler),
         ]
         setting =dict (
@@ -69,9 +66,30 @@ class Application(tornado.web.Application):
         self.db = pymongo.Connection('localhost',27017).goipc
 
 
+class MyErrorHandler(Web.RequestHandler):
+    """Generates an error response with ``status_code`` for all requests."""
+    def initialize(self, status_code):
+        self.set_status(status_code)
+
+    def prepare(self):
+        access_log.error("[MyErrorHandler] %d" % self._status_code )
+        if self._status_code == 404:
+            return self.render("e404.html")
+
+       # raise Web.HTTPError(self._status_code)
+
+    def check_xsrf_cookie(self):
+        # POSTs to an ErrorHandler don't actually have side effects,
+        # so we don't need to check the xsrf token.  This allows POSTs
+        # to the wrong url to return a 404 instead of 403.
+        pass
+
+
+
 
 def main():
     tornado.options.parse_command_line()
+    tornado.web.ErrorHandler = MyErrorHandler
     http_server=tornado.httpserver.HTTPServer(Application())
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
