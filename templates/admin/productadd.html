@@ -1,0 +1,55 @@
+{% extends "../base.html" %}
+
+{% block head %}
+
+
+    <!-- 配置文件 -->
+    <script type="text/javascript" src={{static_url("ueditor/ueditor.config.js")}}></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src={{static_url("ueditor/ueditor.all.js")}}></script>
+
+
+
+
+{% end %}
+
+{% block body %}
+    {% include admin_nav_menu.html  %}
+
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+
+                 <!-- 加载编辑器的容器 -->
+                <script id="container" name="content" type="text/plain">
+                    这里写你的初始化内容
+                </script>
+
+
+            </div>
+        </div>
+    </div>
+{% end %}
+
+
+{% block footer %}
+{% end %}
+
+
+{% block endJs  %}
+     <script>
+        $(window).bind('beforeunload',function(){
+        //return '您输入的内容尚未保存，确定离开此页面吗？';
+         $.post( "/admin/logout");
+         });
+    </script>
+
+
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var ue = UE.getEditor('container');
+    </script>
+
+
+
+{% end %}

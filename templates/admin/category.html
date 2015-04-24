@@ -19,11 +19,9 @@
 
     <div class="span9">
       <!--Body content-->
-       <div >
+        <div >
 
-
-
-    </div>
+        </div>
   </div>
 </div>
 
@@ -35,7 +33,7 @@
             <h3 id="myModalLabel">添加品牌分类</h3>
         </div>
         <div class="modal-body">
-             <form class="" id="brand-form" >
+             <form class="" id="brand-form" action="/admin/addbrand" method="POST">
                 <input type="text" id="brandname" name="brandname" class="input-block-level " placeholder="研华工控产品"><br/>
             </form>
         </div>
@@ -62,7 +60,6 @@
             //return '您输入的内容尚未保存，确定离开此页面吗？';
              $.post( "/admin/logout");
              });
-
         </script>
 
         <script type="text/javascript" src="{{static_url("js/jquery.validate.min.js")}}"></script>
@@ -82,10 +79,8 @@
                            minlength: "产品分类长度不能小于六位"
                         },
                     },
-
-
-                });
-            });
+               });
+           });
         </script>
 
 
@@ -93,12 +88,18 @@
 
 
             $( "#btnAddBand" ).click(function() {
-              var $form = $( "#brand-form" );
+                var $form = $( "#brand-form" );
+                brandname = $form.find( 'input[name="brandname"]' ).val(),
+                url = $form.attr( 'action' );
+                if($form.valid()) {
 
-               brandname = $form.find( 'input[name="brandname"]' ).val(),
-
-                console.log("#brand-form validate  === ", $form.valid() , brandname)
-
+                    $.post( url, { brandname: brandname },
+                    function( data ) {
+                        var content = $( data ).find( 'content' );
+                        $( "#result" ).empty().append( data["content"] );
+                        console.log("添加品牌分类" ，data["id"] ,data["content"])
+                    },"json");
+                }
             });
 
         </script>
