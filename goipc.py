@@ -13,14 +13,17 @@ import  tornado.ioloop
 import  tornado.web as Web
 import  tornado.options
 import  pymongo
+
 from tornado.options import define, options
 from  tornado.log import  access_log
 
 
 import admin.admin as adminuser
 import admin.category as category
+import admin.product as product
 
-from lib import common
+from lib import common, ueditorhander
+
 
 
 define("port",default=8888,help="run on the given port", type=int)
@@ -43,13 +46,16 @@ class IndexHandler(common.BaseHandle):
 class Application(tornado.web.Application):
     def  __init__(self):
         handlers = [
+            (r"/admin/ueditorHander", ueditorhander.UEditorManager),
+            (r"/ueditor",product.testUeditor),
 
             (r"/",IndexHandler),
-
             (r"^/admin.?$", adminuser.AdminIndex),
             (r"/admin/login.?$", adminuser.AdminLogin),
             (r"^/admin/logout.?$", adminuser.AdminLogout),
             (r"^/admin/category.?$" , category.listCategory),
+            (r"/admin/addbrand.?$",category.AddBrandName),
+            (r"/admin/product/add.?$", product.ProductAdd),
             #(r"^$",IndexHandler),
         ]
         setting =dict (
@@ -66,6 +72,7 @@ class Application(tornado.web.Application):
         self.db = pymongo.Connection('localhost',27017).goipc
 
 
+
 class MyErrorHandler(Web.RequestHandler):
     """Generates an error response with ``status_code`` for all requests."""
     def initialize(self, status_code):
@@ -73,10 +80,10 @@ class MyErrorHandler(Web.RequestHandler):
 
     def prepare(self):
         access_log.error("[MyErrorHandler] %d" % self._status_code )
-        if self._status_code == 404:
-            return self.render("e404.html")
+        #if self._status_code == 404:
+        #   return self.render("e404.html")
 
-       # raise Web.HTTPError(self._status_code)
+        raise Web.HTTPError(self._status_code)
 
     def check_xsrf_cookie(self):
         # POSTs to an ErrorHandler don't actually have side effects,
@@ -89,7 +96,7 @@ class MyErrorHandler(Web.RequestHandler):
 
 def main():
     tornado.options.parse_command_line()
-    tornado.web.ErrorHandler = MyErrorHandler
+    #tornado.web.ErrorHandler = MyErrorHandler
     http_server=tornado.httpserver.HTTPServer(Application())
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
