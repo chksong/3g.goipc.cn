@@ -26,16 +26,30 @@ def loadUeditorJson():
     except :
         ueditor_json = {}
 
+class GetUpFiles(BaseHandle):
+    def get(self):
+
+        self.wirte("")
+        pass
+
 
 class UEditorManager(BaseHandle):
     def get(self):
+        if 0 == len(ueditor_json):
+                loadUeditorJson()
+
         action = self.get_argument("action")
         if action=="config":
-            if 0 == len(ueditor_json):
-                loadUeditorJson()
-                print("UEditorManager configure file " , ueditor_json)
-
+            print("get configure json " , ueditor_json)
             self.write(ueditor_json)
+
+        elif action == "listimage":
+            path = ueditor_json['imageManagerListPath']
+            self.listImage(path)
+        elif action == "listfile" :
+            path = ueditor_json['fileManagerListPath']
+            self.listImage(path)
+
 
     def post(self):
         if 0 == len(ueditor_json):
@@ -93,6 +107,7 @@ class UEditorManager(BaseHandle):
             ##构造文件名字
             rand_str = u'%06d-%s' %(now.microsecond ,filename)
             save_name =u'{}{}'.format(save_path,rand_str)
+            url_name = u'/{}'.format(save_name)
 
             ##保存文件
             try:
@@ -110,14 +125,49 @@ class UEditorManager(BaseHandle):
                 os.remove(save_name)
                 return
 
+
             ##保存文件成功
             result = {
               "state": "SUCCESS",
-              "url": save_name,
+              "url": url_name,
               "title": filename,
               "original": filename ,
             }
             self.write(result)
 
-    def uploadFile(self, filedname ,configson):
-        pass
+    def listImage(self ,filePath ):
+         #GET {"action": "listimage", "start": 0, "size": 20}
+        start = int(self.get_argument("start"))
+        size =  int (self.get_argument("size"))
+        i_start  = 0
+        i_size   = 0
+        urls = []
+
+        try:
+            lsdir = os.listdir(filePath)
+            for d in lsdir:
+                in_dir = u'{}{}'.format(filePath,d)
+                filelist = os.listdir(in_dir)
+                for f in filelist:
+                    #f_name = u'{}{}/{}'.format(filePath,d,f)
+                    f_name = u'{}/{}'.format(d,f)
+                    if i_start >= start and i_size <size :
+                        i_size += 1
+                        f_name_utf8 =  f_name.encode('utf-8')
+                     #   print f_name , f_name_utf8
+                        urls.append({'url':f_name_utf8})
+
+                    #技术一共有多少个文件
+                    i_start += 1
+
+        except Exception as oserr :
+            self.write({"state" : str(oserr)})
+            return
+
+        result = {
+            "state": "SUCCESS",
+            "list": urls,
+            "start": start ,
+            "total": i_start
+        }
+        self.write(result)
