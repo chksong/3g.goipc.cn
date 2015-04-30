@@ -10,16 +10,22 @@ import tornado.web
 import os.path
 import json
 import re
+import datetime
 from common import BaseHandle
 
 ueditor_json = dict()
 
 def loadUeditorJson():
     global  ueditor_json
-    with open('static/ueditor/python/config.json') as f:
-        context = f.read()
-        text = re.sub("/\*[\s\S]+?\*/" , '' ,context)
-        ueditor_json = json.loads(text)
+    try:
+        with open(u'static/ueditor/python/config.json') as f:
+            context = f.read()
+            #删除`/**/`注释
+            text = re.sub("\/\*[\s\S]+?\*\/" , '' ,context)
+            ueditor_json = json.loads(text)
+    except :
+        ueditor_json = {}
+
 
 class UEditorManager(BaseHandle):
     def get(self):
@@ -31,33 +37,59 @@ class UEditorManager(BaseHandle):
 
             self.write(ueditor_json)
 
-
     def post(self):
         action = self.get_argument("action")
         if action == "uploadimage":
-            self.uploadimage()
+            config = {
+                'pathFormat':ueditor_json['imagePathFormat'],
+                'maxSize':ueditor_json['imageMaxSize'],
+                'allowFiles':ueditor_json['imageAllowFiles']
+            }
+            fieldname = ueditor_json['imageFieldName']
+            self.uploadImage(fieldname,config)
+        elif action == "uploadfile":
+            config = {
+                'pathFormat':ueditor_json['filePathFormat'] ,
+                'maxSize':ueditor_json['fileMaxSize'],
+                'allowFiles':ueditor_json['fileAllowFiles']
+            }
+            fieldname = ueditor_json['fileFieldName']
+            self.uploadImage(fieldname,config)
+        elif action == "uploadvideo":
+            config = {
+                'pathFormat':ueditor_json['videoPathFormat'] ,
+                'maxSize':ueditor_json['videoMaxSize'],
+                'allowFiles':ueditor_json['videoAllowFiles']
+            }
+            fieldname = ueditor_json['fileFieldName']
+            self.uploadImage(fieldname,config)
+        elif action == "uploadscrawl":
+            pass
 
 
-
-    def uploadimage(self):
-        upfile = self.request.files['upfile']
+    def uploadImage(self, filedname , configjson):
+        upfile = self.request.files[filedname]
         if upfile:
             filename = upfile[0]['filename']
-            #path_file = ueditor_json['imagePathFormat']
-            path_file = "static/upload/test.png"
+            now=datetime.datetime.now()
+            save_path=configjson['pathFormat'] % (now.year,now.month,now.day)
+            if not os.path.exists(save_path):
+                os.makedirs (save_path)
 
+            rand_str = u'%06d-%s' %(now.microsecond ,filename)
+            save_name =u'{}{}'.format(save_path,rand_str)
 
-            str_path = path_file[0:path_file.rfind('/')]
-            if not os.path.exists(str_path):
-                os.mkdir(str_path)
+            fout = open(save_name, 'wb')
+            fout.write(upfile[0]['body'])
+            fout.close()
 
-            f_out = open('static/upload/test.png', 'wb')
-            nums = f_out.write(upfile[0]['body'])
-            print nums , len(upfile[0]['body'])
+            result = {
+              "state": "SUCCESS",
+              "url": save_name,
+              "title": filename,
+              "original": filename ,
+            }
+            self.write(result)
 
-            f_out.close()
-
-            print( filename, path_file)
-
-
-
+    def uploadFile(self, filedname ,configson):
+        pass

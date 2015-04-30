@@ -53,5 +53,3 @@ class BaseHandle(tornado.web.RequestHandler, AdminMixin):
             return db_admin["name"]
 
 
-    def get_error_html(self, status_code, **kwargs):
-        print "[get_error_html]  ......."
