@@ -38,6 +38,9 @@ class UEditorManager(BaseHandle):
             self.write(ueditor_json)
 
     def post(self):
+        if 0 == len(ueditor_json):
+             loadUeditorJson()
+
         action = self.get_argument("action")
         if action == "uploadimage":
             config = {
@@ -71,18 +74,43 @@ class UEditorManager(BaseHandle):
         upfile = self.request.files[filedname]
         if upfile:
             filename = upfile[0]['filename']
+            ## 检验扩展类型
+            str_ext = filename[filename.rfind('.'):]
+            if not (str_ext in configjson['allowFiles']):
+                 self.write({"state" :'文件类型不允许'})
+                 return
+
+            ##创建文件的路径
             now=datetime.datetime.now()
             save_path=configjson['pathFormat'] % (now.year,now.month,now.day)
             if not os.path.exists(save_path):
-                os.makedirs (save_path)
+                try:
+                    os.makedirs (save_path)
+                except Exception as oserr :
+                    self.write({"state" : str(oserr)})
+                    return
 
+            ##构造文件名字
             rand_str = u'%06d-%s' %(now.microsecond ,filename)
             save_name =u'{}{}'.format(save_path,rand_str)
 
-            fout = open(save_name, 'wb')
-            fout.write(upfile[0]['body'])
-            fout.close()
+            ##保存文件
+            try:
+                fout = open(save_name, 'wb')
+                fout.write(upfile[0]['body'])
+                fout.close()
+            except Exception as oserr :
+                self.write({"state" : str(oserr)})
+                return
 
+            ##检查文件长度 & 删除该文件
+            file_len = os.path.getsize(save_name)
+            if file_len >  configjson['maxSize'] :
+                self.write({"state" : '文件大小超出网站限制'})
+                os.remove(save_name)
+                return
+
+            ##保存文件成功
             result = {
               "state": "SUCCESS",
               "url": save_name,
