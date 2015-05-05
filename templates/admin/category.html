@@ -4,23 +4,54 @@
     {% include admin_nav_menu.html  %}
 
 <div class="container">
-  <div class="row-fluid">
+  <div class="row">
 
     <!--Sidebar content-->
     <div class="span3  bs-docs-sidebar">
-       <ul class="nav nav-list bs-docs-sidenav affix">
+       <ul class="nav nav-list bs-docs-sidenav ">
+          <li class=""><a href="#"> <button id="id_refresh" type="button" class="btn btn-primary">刷新当前页面</button></a></li>
           <li class=""><a href="#brand"  data-toggle="modal"> <i class="icon-chevron-right"></i>添加品牌</a></li>
-          <li class=""><a href="#gridSystem"><i class="icon-chevron-right"></i> 栅格系统</a></li>
+
           <li class=""><a href="#fluidGridSystem"><i class="icon-chevron-right"></i> 流式栅格系统</a></li>
           <li class="active"><a href="#layouts"><i class="icon-chevron-right"></i> 布局</a></li>
           <li><a href="#responsive"><i class="icon-chevron-right"></i> 响应式设计</a></li>
         </ul>
     </div>
 
-    <div class="span9">
-      <!--Body content-->
-        <div >
+   <!--- 显示品牌和产品分类 -->
+    <div class="span7 offset1 ">
+        <!--警告对话框  -->
+        <div class="alert alert-error">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Warning!</strong> Best check yo self, you're not looking too good.
+        </div>
 
+      <!--Body content-->
+        <div class="">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>品牌名称</th>
+                        <th>产品型号</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                   {% for item in brands %}
+                    <tr>
+                        <td>
+                            {{ escape(item["brand"]) }}
+                        </td>
+                        <td>
+                             {% for cata in item["cata"] %}
+                                <li>{{ escape(cata) }}</li>
+                             {% end %}
+                        </td>
+                    </tr>
+                   {% end %}
+
+                </tbody>
+            </table>
         </div>
   </div>
 </div>
@@ -33,6 +64,7 @@
             <h3 id="myModalLabel">添加品牌分类</h3>
         </div>
         <div class="modal-body">
+            <div id="callback-bandname"></div>
              <form class="" id="brand-form" action="/admin/addbrand" method="POST">
                 <input type="text" id="brandname" name="brandname" class="input-block-level " placeholder="研华工控产品"><br/>
             </form>
@@ -85,8 +117,13 @@
 
 
          <script>
+             <!--刷新当前页面 -->
+            $("#id_refresh").click(function() {
+                console.log("刷新当前页面")
+                window.location.reload();
+            })
 
-
+            <!--  添加品牌的功能函数   -->
             $( "#btnAddBand" ).click(function() {
                 var $form = $( "#brand-form" );
                 brandname = $form.find( 'input[name="brandname"]' ).val(),
@@ -96,8 +133,8 @@
                     $.post( url, { brandname: brandname },
                     function( data ) {
                         var content = $( data ).find( 'content' );
-                        $( "#result" ).empty().append( data["content"] );
-                        console.log("添加品牌分类" ，data["id"] ,data["content"])
+                        $( "#callback-bandname" ).empty().append( data["content"]).append(data["state"]);
+                        console.log("添加品牌分类" ,data["state"] ,data["content"])
                     },"json");
                 }
             });
