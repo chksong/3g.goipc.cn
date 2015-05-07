@@ -6,17 +6,7 @@
 <div class="container">
   <div class="row">
 
-    <!--Sidebar content-->
-    <div class="span3  bs-docs-sidebar">
-       <ul class="nav nav-list bs-docs-sidenav ">
-          <li class=""><a href="#"> <button id="id_refresh" type="button" class="btn btn-primary">刷新当前页面</button></a></li>
-          <li class=""><a href="#brand"  data-toggle="modal"> <i class="icon-chevron-right"></i>添加品牌</a></li>
-
-          <li class=""><a href="#fluidGridSystem"><i class="icon-chevron-right"></i> 流式栅格系统</a></li>
-          <li class="active"><a href="#layouts"><i class="icon-chevron-right"></i> 布局</a></li>
-          <li><a href="#responsive"><i class="icon-chevron-right"></i> 响应式设计</a></li>
-        </ul>
-    </div>
+   {% include category_left.html %}
 
    <!--- 显示品牌和产品分类 -->
     <div class="span7 offset1 ">
@@ -40,7 +30,18 @@
                    {% for item in brands %}
                     <tr>
                         <td>
-                            {{ escape(item["brand"]) }}
+
+                            <div class="dropdown">
+                              <a class="dropdown-toggle" data-toggle="dropdown" href="#"> {{ escape(item["brand"]) }}</a>
+                              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                                  <li><a tabindex="-1" href="#">添加产品型号</a></li>
+                                  <li class="divider"></li>
+                                  <li><a tabindex="-1" href="#">查看产品</a></li>
+                                  <li class="divider"></li>
+                                  <li><a tabindex="-1" href="#">修改</a></li>
+                                  <li><a tabindex="-1" href="#">删除</a></li>
+                            </ul>
+                            </div>
                         </td>
                         <td>
                              {% for cata in item["cata"] %}
