@@ -1,5 +1,10 @@
 {% extends "../base.html" %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ static_url("css/contextMenu.css")}}" type="text/css"/>
+
+{% end %}
+
 {% block body %}
     {% include admin_nav_menu.html  %}
 
@@ -21,7 +26,7 @@
             <table class="table table-bordered ">
                 <thead>
                     <tr>
-                        <th>品牌名称</th>
+                        <th id="ckButton1">品牌名称</th>
                         <th>产品型号</th>
                     </tr>
                 </thead>
@@ -30,18 +35,7 @@
                    {% for item in brands %}
                     <tr>
                         <td>
-
-                            <div class="dropdown">
-                              <a class="dropdown-toggle" data-toggle="dropdown" href="#"> {{ escape(item["brand"]) }}</a>
-                              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                                  <li><a tabindex="-1" href="#">添加产品型号</a></li>
-                                  <li class="divider"></li>
-                                  <li><a tabindex="-1" href="#">查看产品</a></li>
-                                  <li class="divider"></li>
-                                  <li><a tabindex="-1" href="#">修改</a></li>
-                                  <li><a tabindex="-1" href="#">删除</a></li>
-                            </ul>
-                            </div>
+                            <div class="bandname"> {{ escape(item["brand"]) }} </div>
                         </td>
                         <td>
                              {% for cata in item["cata"] %}
@@ -76,6 +70,10 @@
       </div>
     </div>
     <!-- Modal 添加品牌对话  end-->
+
+
+
+
 
 
 {% end %}
@@ -141,4 +139,39 @@
             });
 
         </script>
+
+        <script type="text/javascript" src="{{static_url("js/contextMenu.js")}}"></script>
+        <script type="text/javascript">
+
+                var ck_menu = [{
+                name: 'create',
+                title: 'create button',
+                fun: function (data,even) {
+                    alert('i am add button')
+                }
+            }, {
+                name: 'update',
+                title: 'update button',
+                fun: function (data,even) {
+                    alert('i am update button' )
+                }
+            }, {
+                name: 'delete',
+                title: 'delete button',
+                fun: function (data,even) {
+                    alert('i am delete button')
+                }
+            }];
+
+        //Calling context menu
+         $('.bandname').contextMenu(ck_menu);
+
+
+
+
+
+        </script>
+
+
+
 {% end %}
