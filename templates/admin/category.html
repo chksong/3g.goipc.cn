@@ -59,18 +59,17 @@
             <h3 id="myModalLabel">添加品牌分类</h3>
         </div>
         <div class="modal-body">
-            <div id="callback-bandname"></div>
+            <div id="callback-bandname" class="alert alert-error"></div>
              <form class="" id="brand-form" action="/admin/addbrand" method="POST">
                 <input type="text" id="brandname" name="brandname" class="input-block-level " placeholder="研华工控产品"><br/>
             </form>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal" >关闭</a>
+            <a href="#" class="btn" data-dismiss="modal" id="bandCloseBtn" >关闭</a>
             <a href="#" class="btn btn-primary" id="btnAddBand">添加</a>
       </div>
     </div>
     <!-- Modal 添加品牌对话  end-->
-
 
 
 
@@ -101,14 +100,14 @@
                     rules: {
                         brandname: {
                             required:true,
-                            minlength :6
+                            minlength :5
                         },
                     },
                     messages: {
                         brandname: {
                            required: "请填写产品分类名称",
                            minlength: "产品分类长度不能小于六位"
-                        },
+                        }
                     },
                });
            });
@@ -128,7 +127,6 @@
                 brandname = $form.find( 'input[name="brandname"]' ).val(),
                 url = $form.attr( 'action' );
                 if($form.valid()) {
-
                     $.post( url, { brandname: brandname },
                     function( data ) {
                         var content = $( data ).find( 'content' );
@@ -138,40 +136,44 @@
                 }
             });
 
+
+            $("#bandCloseBtn").click(function() {
+                $( "#callback-bandname" ).empty() ;
+                $( "#brandname" ).empty() ;
+            });
         </script>
 
+         <script type="text/javascript" src="{{static_url("js/jquery.cookie.js")}}"></script>
+        <script type="text/javascript">
+        $(function(){
+             $('.bandname').click(function() {
+                console.log("set band name" , $(this).text())
+                $.cookie('bandname', $(this).text());
+             }) ;
+        }) ;
+       </script>
+
+
+        //品牌和分类 添加
         <script type="text/javascript" src="{{static_url("js/contextMenu.js")}}"></script>
+
         <script type="text/javascript">
 
-                var ck_menu = [{
-                name: 'create',
-                title: 'create button',
+            var ck_menu = [{
+                name: '修改',
                 fun: function (data,even) {
-                    alert('i am add button')
+                     console.log("update band name" , $.cookie('bandname') )
                 }
-            }, {
-                name: 'update',
-                title: 'update button',
+            },  {
+                name: '删除',
                 fun: function (data,even) {
-                    alert('i am update button' )
-                }
-            }, {
-                name: 'delete',
-                title: 'delete button',
-                fun: function (data,even) {
-                    alert('i am delete button')
+                     console.log("delte band name" , $.cookie('bandname') )
                 }
             }];
 
-        //Calling context menu
-         $('.bandname').contextMenu(ck_menu);
-
-
-
-
-
+            //Calling context menu
+             $('.bandname').contextMenu(ck_menu);
         </script>
-
 
 
 {% end %}

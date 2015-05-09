@@ -6,7 +6,7 @@
 # 管理员登录验证
 
 
-
+import  pymongo
 from lib import common
 import  logging
 
@@ -17,20 +17,27 @@ class listCategory(common.BaseHandle):
             self.redirect("/")
             return
 
-        cates = [
-            {
-                "brand": "研华工控产品",
-                "cata" : ["工控机","主板", "电源"]
-            },
-            {
-                "brand": "华北工控产品",
-                "cata" : ["工控机","主板", "电源"]
-            },
-            {
-                "brand": "凌华公共产品",
-                "cata" : ["工控机","主板", "电源"]
-            },
-        ]
+        cates= []
+        collection = self.db.category
+        for item in collection.find({},{"bandname":1}):
+            cates.append({"brand":item["bandname"],"cata":[]})
+            pass
+
+
+        # cates = [
+        #     {
+        #         : "研华工控产品",
+        #         "cata" : ["工控机","主板", "电源"]
+        #     },
+        #     {
+        #         "brand": "华北工控产品",
+        #         "cata" : ["工控机","主板", "电源"]
+        #     },
+        #     {
+        #         "brand": "凌华公共产品",
+        #         "cata" : ["工控机","主板", "电源"]
+        #     },
+        # ]
 
         self.render("admin/category.html",admin_user=admin_user, brands=cates )
 
@@ -48,9 +55,18 @@ class AddBrandName(common.BaseHandle):
             return
 
         brandname = self.get_argument("brandname")
-        if not brandname or len(brandname) <10 :
+        if not brandname or len(brandname) <6 :
             self.write({"content":"品牌字段为空或者太短", "state":-1})
             return
+
+        collection = self.db.category
+        db_result = collection.find_one({"bandname":brandname})
+        if not db_result:  #
+             collection.insert({"bandname":brandname})
+        else  :
+           pass
+
+
 
         logging.info("[AddBrandName] brandname=%s" % brandname )
 
