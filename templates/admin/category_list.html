@@ -93,7 +93,6 @@
         </script>
 
         <script type="text/javascript" src="{{static_url("js/jquery.validate.min.js")}}"></script>
-
         <script type="text/javascript">
            $().ready(  function() {
                $("#brand-form").validate({
@@ -143,31 +142,38 @@
             });
         </script>
 
-         <script type="text/javascript" src="{{static_url("js/jquery.cookie.js")}}"></script>
+        <script type="text/javascript" src="{{static_url("js/jquery.cookie.js")}}"></script>
         <script type="text/javascript">
         $(function(){
              $('.bandname').click(function() {
                 console.log("set band name" , $(this).text())
-                $.cookie('bandname', $(this).text());
+                $.cookie('brandname', $(this).text());
              }) ;
         }) ;
        </script>
 
 
-        //品牌和分类 添加
+        <!-- 品牌和分类 添加  -->
+        <script type="text/javascript" src="{{static_url("js/jquery.msgbox.min.js")}}"></script>
         <script type="text/javascript" src="{{static_url("js/contextMenu.js")}}"></script>
-
         <script type="text/javascript">
-
             var ck_menu = [{
                 name: '修改',
                 fun: function (data,even) {
-                     console.log("update band name" , $.cookie('bandname') )
+                      window.location.href =('/admin/editBrand?brandname='+$.cookie('brandname') );
                 }
             },  {
                 name: '删除',
                 fun: function (data,even) {
-                     console.log("delte band name" , $.cookie('bandname') )
+                    $.confirm("确认删除 " + $.cookie('brandname'),function(bool){
+                        if(bool) {
+                            $.get("/admin/deleteBrand",{"brandname": $.cookie('brandname')},
+                                function(data) {
+                                    $.alert(data["content"])
+                                }
+                            )
+                        }
+                    });
                 }
             }];
 

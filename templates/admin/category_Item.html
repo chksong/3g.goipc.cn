@@ -1,0 +1,121 @@
+{% extends "../base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static_url("css/contextMenu.css")}}" type="text/css"/>
+
+{% end %}
+
+{% block body %}
+    {% include admin_nav_menu.html  %}
+
+<div class="container">
+  <div class="row">
+
+   {% include category_left.html %}
+
+   <!--- 显示品牌和产品分类 -->
+    <div class="span7 offset1 ">
+        <!--警告对话框  -->
+        <div class="alert alert-error">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Warning!</strong> Best check yo self, you're not looking too good.
+        </div>
+
+      <!--Body content-->
+        <div class="">
+            <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">Email</label>
+                    <div class="controls">
+                      <input type="text" id="inputEmail" placeholder="Email">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">Password</label>
+                    <div class="controls">
+                      <input type="password" id="inputPassword" placeholder="Password">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                      <label class="checkbox">
+                        <input type="checkbox"> Remember me
+                      </label>
+                      <button type="submit" class="btn">Sign in</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+{% end %}
+
+
+{% block footer %}
+
+{% end %}
+
+
+{% block endJs  %}
+
+        <script>
+            $(window).bind('beforeunload',function(){
+            //return '您输入的内容尚未保存，确定离开此页面吗？';
+             $.post( "/admin/logout");
+             });
+        </script>
+
+        <script type="text/javascript" src="{{static_url("js/jquery.validate.min.js")}}"></script>
+        <script type="text/javascript">
+           $().ready(  function() {
+               $("#brand-form").validate({
+                    rules: {
+                        brandname: {
+                            required:true,
+                            minlength :5
+                        },
+                    },
+                    messages: {
+                        brandname: {
+                           required: "请填写产品分类名称",
+                           minlength: "产品分类长度不能小于六位"
+                        }
+                    },
+               });
+           });
+        </script>
+
+
+         <script>
+             <!--刷新当前页面 -->
+            $("#id_refresh").click(function() {
+                console.log("刷新当前页面")
+                window.location.reload();
+            })
+
+            <!--  添加品牌的功能函数   -->
+            $( "#btnAddBand" ).click(function() {
+                var $form = $( "#brand-form" );
+                brandname = $form.find( 'input[name="brandname"]' ).val(),
+                url = $form.attr( 'action' );
+                if($form.valid()) {
+                    $.post( url, { brandname: brandname },
+                    function( data ) {
+                        var content = $( data ).find( 'content' );
+                        $( "#callback-bandname" ).empty().append( data["content"]).append(data["state"]);
+                        console.log("添加品牌分类" ,data["state"] ,data["content"])
+                    },"json");
+                }
+            });
+        </script>
+
+{% end %}
