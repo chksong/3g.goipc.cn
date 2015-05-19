@@ -93,20 +93,52 @@ class editBrand(common.BaseHandle):
 
         collection = self.db.category
         db_result = collection.find_one({"bandname":brandname})
-        brand_item= {}
-        brand_item["brandname"] = brandname
+        brand_items= {}
+        brand_items["brandname"] = brandname
 
         if "keywords" in db_result:
-            brand_item["keywords"] = db_result["keywords"]
+            brand_items["keywords"] = db_result["keywords"]
         else:
-            brand_item["keywords"] = ""
+            brand_items["keywords"] = ""
 
         if "Description" in db_result:
-            brand_item["Description"] = db_result["Description"]
+            brand_items["Description"] = db_result["Description"]
         else:
-            brand_item["Description"] = ""
+            brand_items["Description"] = ""
 
-        self.render("admin/category_item.html",admin_user=admin_user, brandItem=brand_item)
 
+        self.render("admin/category_item.html",admin_user=admin_user, brandItems=brand_items)
+
+    def post(self):
+        admin_user = self.get_admin_user()
+        if not admin_user:
+            self.redirect("/")
+            return
+
+        brandname = self.get_argument("brandname")
+        if not brandname:
+            self.write({"content":"修改branditem参数错误", "state":-1})
+            return
+
+        keywords=   self.get_argument("keywords")
+        desp =      self.get_argument("descp")
+
+        collection = self.db.category
+        collection.update({"bandname" : brandname}, {"$set" : {"keywords":keywords, "Description":desp}})
+
+        self.write({"content":"修改branditem成功", "state":1})
+
+
+class AddCataName(common.BaseHandle):
+    def post(self):
+        pass
+
+class editCataName(common.BaseHandle):
+    def post(self):
+        pass
+    def get(self):
+        pass
+
+class deleteCataName(common.BaseHandle)
     def post(self):
         pass

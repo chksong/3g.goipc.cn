@@ -1,7 +1,7 @@
 {% extends "../base.html" %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ static_url("css/contextMenu.css")}}" type="text/css"/>
+
 
 {% end %}
 
@@ -13,49 +13,37 @@
 
    {% include category_left.html %}
 
+
    <!--- 显示品牌和产品分类 -->
-    <div class="span7 offset1 ">
-        <!--警告对话框  -->
-        <div class="alert alert-error">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong>Warning!</strong> Best check yo self, you're not looking too good.
-        </div>
+    <div class="span8  offset1 ">
+          <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>选项</th>
+                        <th>详细信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>分类名称 </td>
+                        <td> {{ escape(brandItems["brandname"]) }} </td>
+                    </tr>
+                    <tr>
+                        <td>关键字</td>
+                        <td> <textarea rows="2" class="span5" id="keywords" >{{ escape(brandItems["keywords"])}}</textarea> </br></td>
+                    </tr>
+                     <tr>
+                        <td>描述</td>
+                        <td> <textarea rows="3" class="span5" id="descp" >{{ escape(brandItems["Description"])}} </textarea> </br> </td>
+                    </tr>
+                </tbody>
+           </table>
+           <div id="msg">msg</div>
+          <div align="center" ><button id="btn-save" class="btn btn-primary btn-success" type="button">保存</button></div>
 
-      <!--Body content-->
-        <div class="">
-            <form class="form-horizontal">
-                <div class="control-group">
-                    <label class="control-label" for="inputEmail">Email</label>
-                    <div class="controls">
-                      <input type="text" id="inputEmail" placeholder="Email">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputPassword">Password</label>
-                    <div class="controls">
-                      <input type="password" id="inputPassword" placeholder="Password">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                      <label class="checkbox">
-                        <input type="checkbox"> Remember me
-                      </label>
-                      <button type="submit" class="btn">Sign in</button>
-                    </div>
-                </div>
-            </form>
-
-        </div>
+    </div>
   </div>
 </div>
-
-
-
-
-
-
-
 
 {% end %}
 
@@ -74,33 +62,39 @@
              });
         </script>
 
-        <script type="text/javascript" src="{{static_url("js/jquery.validate.min.js")}}"></script>
-        <script type="text/javascript">
-           $().ready(  function() {
-               $("#brand-form").validate({
-                    rules: {
-                        brandname: {
-                            required:true,
-                            minlength :5
-                        },
-                    },
-                    messages: {
-                        brandname: {
-                           required: "请填写产品分类名称",
-                           minlength: "产品分类长度不能小于六位"
-                        }
-                    },
-               });
-           });
-        </script>
 
-
+         <script type="text/javascript" src="{{static_url("js/jquery.cookie.js")}}"></script>
+         <script type="text/javascript" src="{{static_url("js/jquery.msgbox.min.js")}}"></script>
          <script>
              <!--刷新当前页面 -->
             $("#id_refresh").click(function() {
                 console.log("刷新当前页面")
                 window.location.reload();
             })
+
+          <!-- save brand item-->
+           $("#btn-save").click( function() {
+                $("#msg").empty()
+               if( $("#keywords").val().length < 3)  {
+                    $.alert("关键字端太短")
+                    $("#msg").empty().text("关键字端太短")
+                    return ;
+               }
+
+                if( $("#descp").val().length < 3)  {
+                    $.alert("描述字段太短")
+                    $("#msg").empty().text("描述字段太短")
+                    return ;
+                }
+
+                $.post("/admin/editBrand", {"brandname":$.cookie('brandname') ,"keywords":$("#keywords").val(),"descp":$("#descp").val() },
+                    function( data ) {
+                        var content = $( data ).find( 'content' );
+                        $( "#msg" ).empty().append( data["content"]).append(data["state"]);
+                    },"json");
+
+           });
+
 
             <!--  添加品牌的功能函数   -->
             $( "#btnAddBand" ).click(function() {
