@@ -38,7 +38,7 @@
                             <div class="bandname"> {{ escape(item["brand"]) }} </div>
                         </td>
                         <td>
-                             {% for cata in item["cata"] %}
+                             {% for cata in item["catalist"] %}
                                 <li>{{ escape(cata) }}</li>
                              {% end %}
                         </td>
@@ -79,9 +79,7 @@
         </div>
         <div class="modal-body">
             <div id="callback-bandname" class="alert alert-error"></div>
-             <form class="" id="brand-form" action="/admin/addbrand" method="POST">
-                <input type="text" id="cataname" name="cataname" class="input-block-level " placeholder="添加产品分类"><br/>
-            </form>
+             <input type="text" id="cataname" name="cataname" class="input-block-level " placeholder="添加产品分类"><br/>
         </div>
         <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal" id="cataCloseBtn" >关闭</a>
@@ -105,7 +103,24 @@
             //return '您输入的内容尚未保存，确定离开此页面吗？';
              $.post( "/admin/logout");
              });
+
+              <!--刷新当前页面 -->
+            $("#id_refresh").click(function() {
+                console.log("刷新当前页面")
+                window.location.reload();
+            })
+
         </script>
+
+        <script type="text/javascript" src="{{static_url("js/jquery.cookie.js")}}"></script>
+        <script type="text/javascript">
+        $(function(){
+             $('.bandname').click(function() {
+                console.log("set band name" , $(this).text())
+                $.cookie('brandname', $(this).text());
+             }) ;
+        }) ;
+       </script>
 
         <script type="text/javascript" src="{{static_url("js/jquery.validate.min.js")}}"></script>
         <script type="text/javascript">
@@ -124,16 +139,7 @@
                         }
                     },
                });
-           });
-        </script>
-
-
-         <script>
-             <!--刷新当前页面 -->
-            $("#id_refresh").click(function() {
-                console.log("刷新当前页面")
-                window.location.reload();
-            })
+           })
 
             <!--  添加品牌的功能函数   -->
             $( "#btnAddBand" ).click(function() {
@@ -149,26 +155,32 @@
                     },"json");
                 }
             });
-
-
             $("#bandCloseBtn").click(function() {
                 $( "#callback-bandname" ).empty() ;
                 $( "#brandname" ).empty() ;
             });
         </script>
 
-        <script type="text/javascript" src="{{static_url("js/jquery.cookie.js")}}"></script>
+        <!-- 快速添加产品下的分类 -->
         <script type="text/javascript">
-        $(function(){
-             $('.bandname').click(function() {
-                console.log("set band name" , $(this).text())
-                $.cookie('brandname', $(this).text());
-             }) ;
-        }) ;
-       </script>
+            $("#cataAddBtn").click(function() {
+                if ($("#cataname").val().length < 3 ) {
+                    $.alert("产品分类名称太短")
+                    return
+                }
+
+                $.post("/admin/addCata", {"brandname":$.cookie('brandname') ,"cataname":$("#cataname").val() },
+                function( data ) {
+                    var content = $( data ).find( 'content' );
+                    $( "#msg" ).empty().append( data["content"]).append(data["state"]);
+                },"json");
+            }) ;
+        </script>
 
 
-        <!-- 品牌和分类 添加  -->
+
+
+        <!-- 右键菜单  品牌和分类 添加  -->
         <script type="text/javascript" src="{{static_url("js/jquery.msgbox.min.js")}}"></script>
         <script type="text/javascript" src="{{static_url("js/contextMenu.js")}}"></script>
         <script type="text/javascript">

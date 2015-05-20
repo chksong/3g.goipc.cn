@@ -48,14 +48,19 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/admin/ueditorHander", ueditorhander.UEditorManager),
             (r"/ueditor",product.testUeditor),
-
             (r"/",IndexHandler),
             (r"^/admin.?$", adminuser.AdminIndex),
             (r"/admin/login.?$", adminuser.AdminLogin),
             (r"^/admin/logout.?$", adminuser.AdminLogout),
             (r"^/admin/category.?$" , category.listCategory),
             (r"/admin/addbrand.?$",category.AddBrandName),
-            (r"/admin/product/add.?$", product.ProductAdd),
+            (r"^/admin/deleteBrand.?$", category.deleteBrand) ,
+            (r"^/admin/editBrand.?$", category.editBrand) ,
+            (r"^/admin/addCata.?$", category.AddCataName) ,
+            (r"^/admin/editCata.?$", category.editCataName) ,
+            (r"^/admin/deleCata.?$", category.deleteCataName) ,
+
+            (r"^/admin/product/add.?$", product.ProductAdd),
             #(r"^$",IndexHandler),
         ]
         setting =dict (
