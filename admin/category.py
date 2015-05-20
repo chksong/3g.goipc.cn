@@ -152,8 +152,18 @@ class AddCataName(common.BaseHandle):
             return
 
         collection = self.db.category
+        #检查是否存在 产品分类
+        for item in collection.find({},{"brandname":1 ,"cataItems":1}):
+            if "cataItems" in item:
+                for cataItem in item["cataItems"]:
+                    if cataItem["cataName"] == cataname:
+                        self.write({"content":"添加产品分类已经存在", "state":-1})
+                        return ;
+
+
         collection.update({"brandname":brandname}, {"$push":{"cataItems":{"cataName":cataname}}})
         self.write({"content":"添加产品分类成功", "state":1})
+    
 
 
 class editCataName(common.BaseHandle):
