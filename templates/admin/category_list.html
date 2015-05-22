@@ -39,7 +39,7 @@
                         </td>
                         <td>
                              {% for cata in item["catalist"] %}
-                                <li>{{ escape(cata) }}</li>
+                                <li class="cataItem" >{{ escape(cata) }}</li>
                              {% end %}
                         </td>
                     </tr>
@@ -78,7 +78,7 @@
             <h3 id="catadlgHeaderLabel">添加产品分类 </h3>
         </div>
         <div class="modal-body">
-            <div id="callback-bandname" class="alert alert-error"></div>
+            <div id="callback-catadlg" class="alert alert-error"></div>
              <input type="text" id="cataname" name="cataname" class="input-block-level " placeholder="添加产品分类"><br/>
         </div>
         <div class="modal-footer">
@@ -98,6 +98,7 @@
 
 {% block endJs  %}
 
+        <script type="text/javascript" src="{{static_url("js/jquery.msgbox.min.js")}}"></script>
         <script>
             $(window).bind('beforeunload',function(){
             //return '您输入的内容尚未保存，确定离开此页面吗？';
@@ -118,6 +119,13 @@
              $('.bandname').click(function() {
                 console.log("set band name" , $(this).text())
                 $.cookie('brandname', $(this).text());
+             }) ;
+        }) ;
+
+        $(function(){
+             $('.cataItem').click(function() {
+                console.log("set cataItem name" , $(this).text())
+                $.cookie('cataItem', $(this).text());
              }) ;
         }) ;
        </script>
@@ -147,11 +155,11 @@
                 brandname = $form.find( 'input[name="brandname"]' ).val(),
                 url = $form.attr( 'action' );
                 if($form.valid()) {
-                    $.post( url, { brandname: brandname },
+                    $.post( url, { brandname: brandname},
                     function( data ) {
                         var content = $( data ).find( 'content' );
                         $( "#callback-bandname" ).empty().append( data["content"]).append(data["state"]);
-                        console.log("添加品牌分类" ,data["state"] ,data["content"])
+                        $.alert(data["state"] +data["content"])
                     },"json");
                 }
             });
@@ -172,7 +180,7 @@
                 $.post("/admin/addCata", {"brandname":$.cookie('brandname') ,"cataname":$("#cataname").val() },
                 function( data ) {
                     var content = $( data ).find( 'content' );
-                    $( "#msg" ).empty().append( data["content"]).append(data["state"]);
+                    $.alert( data["content"] + "  " + data["state"]);
                 },"json");
             }) ;
         </script>
@@ -181,11 +189,10 @@
 
 
         <!-- 右键菜单  品牌和分类 添加  -->
-        <script type="text/javascript" src="{{static_url("js/jquery.msgbox.min.js")}}"></script>
         <script type="text/javascript" src="{{static_url("js/contextMenu.js")}}"></script>
         <script type="text/javascript">
             var ck_menu = [{
-                name: '修改',
+                name: '修改品牌',
                 fun: function (data,even) {
                       window.location.href =('/admin/editBrand?brandname='+$.cookie('brandname') );
                 }
@@ -196,7 +203,7 @@
                      $('#catadlg').modal()
                 }
             } , {
-                name: '删除',
+                name: '删除品牌',
                 fun: function (data,even) {
                     $.confirm("确认删除 " + $.cookie('brandname'),function(bool){
                         if(bool) {
@@ -212,6 +219,30 @@
 
             //Calling context menu
              $('.bandname').contextMenu(ck_menu);
+
+
+
+             var cata_menu = [{
+                name: '修改产品分类',
+                fun: function (data,even) {
+                      window.location.href =("/admin/editCata?brandname="+$.cookie('brandname')+"&cataItem="+$.cookie('cataItem') );
+                }
+            },  {
+                name: '删除产品分类',
+                fun: function (data,even) {
+                    $.confirm("确认删除 " + $.cookie('brandname'),function(bool){
+                        if(bool) {
+                            $.get("/admin/deleCata",{"brandname": $.cookie('brandname'),"cataItem": $.cookie('cataItem')},
+                                function(data) {
+                                    $.alert(data["content"])
+                                }
+                            )
+                        }
+                    });
+                }
+            }];
+             $('.cataItem').contextMenu(cata_menu);
+
         </script>
 
 

@@ -29,13 +29,6 @@ class listCategory(common.BaseHandle):
             else :
                 cates.append({"brand":item["brandname"],"catalist":[]})
 
-        # cates = [
-        #     {
-        #         "brand": "凌华公共产品",
-        #         "cata" : ["工控机","主板", "电源"]
-        #     },
-        # ]
-
         self.render("admin/category_list.html",admin_user=admin_user, brands=cates )
 
     def post(self):
@@ -62,7 +55,8 @@ class AddBrandName(common.BaseHandle):
         if not db_result:  #
              collection.insert({"brandname":brandname})
         else  :
-           pass
+            self.write({"content":"品牌已经存在", "state":-1})
+            return
 
         logging.info("[AddBrandName] brandname=%s" % brandname )
         self.write({"content":"成功", "state":1})
@@ -152,26 +146,73 @@ class AddCataName(common.BaseHandle):
             return
 
         collection = self.db.category
-        #检查是否存在 产品分类
-        for item in collection.find({},{"brandname":1 ,"cataItems":1}):
-            if "cataItems" in item:
-                for cataItem in item["cataItems"]:
-                    if cataItem["cataName"] == cataname:
-                        self.write({"content":"添加产品分类已经存在", "state":-1})
-                        return ;
+        db_reslut  = collection.find({"cataItems.cataName":cataname})
+        if db_reslut.count():
+            self.write({"content":"添加产品分类已经存在", "state":-1})
+            return
+        else :
+            collection.update({"brandname":brandname}, {"$push":{"cataItems":{"cataName":cataname}}})
+            self.write({"content":"添加产品分类成功", "state":1})
 
 
-        collection.update({"brandname":brandname}, {"$push":{"cataItems":{"cataName":cataname}}})
-        self.write({"content":"添加产品分类成功", "state":1})
-    
+
+class deleteCataName(common.BaseHandle):
+    def get(self):
+        admin_user = self.get_admin_user()
+        if not admin_user:
+            self.redirect("/")
+            return
+
+        brandname = self.get_argument("brandname").strip()
+        if not brandname:
+            self.write({"content":"删除branditem参数错误", "state":-1})
+            return
+
+        cataname =self.get_argument("cataItem").strip()
+        if not cataname:
+            self.write({"content":"删除cataname参数错误", "state":-1})
+            return
+
+        collection = self.db.category
+        collection.update({"brandname" : brandname}, {"$pull":{"cataItems":{"cataName":cataname}}})
+        self.write({"content":"删除产品分类已经成功", "state":-1})
 
 
 class editCataName(common.BaseHandle):
-    def post(self):
-        pass
     def get(self):
-        pass
+        admin_user = self.get_admin_user()
+        if not admin_user:
+            self.redirect("/")
+            return
 
-class deleteCataName(common.BaseHandle):
+        brandname = self.get_argument("brandname").strip()
+        if not brandname:
+            return
+
+        cataname =self.get_argument("cataItem").strip()
+        if not cataname:
+            return
+
+        item_cata = {
+            "brandname":brandname,
+            "cataname":cataname,
+            "keywords":"",
+            "description":""
+        }
+
+        collection = self.db.category
+        db_reslut  = collection.find({"cataItems.cataName":cataname},{"cataItems":1})
+        for db_item in db_reslut:
+           for cata_item  in  db_item["cataItems"]:
+               if  cata_item["cataName"] == cataname:
+                   if "keywords" in cata_item:
+                       item_cata["keywords"]=cata_item["cata"]
+                   if  "Description" in cata_item:
+                       item_cata["Description"]= cata_item["Description"]
+
+
+        self.render("admin/category_cata_item.html",admin_user=admin_user, cataItem=item_cata)
+
+
     def post(self):
         pass
