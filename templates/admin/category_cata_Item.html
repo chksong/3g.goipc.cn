@@ -91,29 +91,16 @@
                     return ;
                 }
 
-                $.post("/admin/editBrand", {"brandname":$.cookie('brandname') ,"keywords":$("#keywords").val(),"descp":$("#descp").val() },
+                $.post("/admin/editCata", {"cataItem":$.cookie('cataItem') ,"keywords":$("#keywords").val(),
+                            "descp":$("#descp").val() },
                     function( data ) {
                         var content = $( data ).find( 'content' );
                         $( "#msg" ).empty().append( data["content"]).append(data["state"]);
+                        $.alert(data["content"] + "  " + data["state"])
                     },"json");
 
            });
 
-
-            <!--  添加品牌的功能函数   -->
-            $( "#btnAddBand" ).click(function() {
-                var $form = $( "#brand-form" );
-                brandname = $form.find( 'input[name="brandname"]' ).val(),
-                url = $form.attr( 'action' );
-                if($form.valid()) {
-                    $.post( url, { brandname: brandname },
-                    function( data ) {
-                        var content = $( data ).find( 'content' );
-                        $( "#callback-bandname" ).empty().append( data["content"]).append(data["state"]);
-                        console.log("添加品牌分类" ,data["state"] ,data["content"])
-                    },"json");
-                }
-            });
         </script>
 
 {% end %}

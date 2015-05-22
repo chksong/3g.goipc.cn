@@ -232,7 +232,7 @@
                 fun: function (data,even) {
                     $.confirm("确认删除 " + $.cookie('brandname'),function(bool){
                         if(bool) {
-                            $.get("/admin/deleCata",{"brandname": $.cookie('brandname'),"cataItem": $.cookie('cataItem')},
+                            $.get("/admin/deleCata",{"cataItem": $.cookie('cataItem')},
                                 function(data) {
                                     $.alert(data["content"])
                                 }

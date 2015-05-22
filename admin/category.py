@@ -163,10 +163,10 @@ class deleteCataName(common.BaseHandle):
             self.redirect("/")
             return
 
-        brandname = self.get_argument("brandname").strip()
-        if not brandname:
-            self.write({"content":"删除branditem参数错误", "state":-1})
-            return
+        # brandname = self.get_argument("brandname").strip()
+        # if not brandname:
+        #     self.write({"content":"删除branditem参数错误", "state":-1})
+        #     return
 
         cataname =self.get_argument("cataItem").strip()
         if not cataname:
@@ -174,7 +174,7 @@ class deleteCataName(common.BaseHandle):
             return
 
         collection = self.db.category
-        collection.update({"brandname" : brandname}, {"$pull":{"cataItems":{"cataName":cataname}}})
+        collection.update({"cataItems.cataName":cataname}, {"$pull":{"cataItems":{"cataName":cataname}}})
         self.write({"content":"删除产品分类已经成功", "state":-1})
 
 
@@ -201,12 +201,13 @@ class editCataName(common.BaseHandle):
         }
 
         collection = self.db.category
-        db_reslut  = collection.find({"cataItems.cataName":cataname},{"cataItems":1})
+        db_reslut  = collection.find({"cataItems.cataName":cataname},{"cataItems":1,"brandname":1})
         for db_item in db_reslut:
            for cata_item  in  db_item["cataItems"]:
                if  cata_item["cataName"] == cataname:
+                   item_cata["brandname"] = db_item["brandname"]
                    if "keywords" in cata_item:
-                       item_cata["keywords"]=cata_item["cata"]
+                       item_cata["keywords"]=cata_item["keywords"]
                    if  "Description" in cata_item:
                        item_cata["Description"]= cata_item["Description"]
 
@@ -215,4 +216,20 @@ class editCataName(common.BaseHandle):
 
 
     def post(self):
-        pass
+        admin_user = self.get_admin_user()
+        if not admin_user:
+            self.redirect("/")
+            return
+
+        cataname =self.get_argument("cataItem").strip()
+        if not cataname:
+            return
+
+        keywords=   self.get_argument("keywords").strip()
+        desp =      self.get_argument("descp").strip()
+
+        collection = self.db.category
+        collection.update({"cataItems.cataName":cataname},{"$set":{"cataItems.$.keywords":keywords ,
+                                                                   "cataItems.$.Description":desp}})
+
+        self.write({"content":"修改cataItems成功", "state":1})

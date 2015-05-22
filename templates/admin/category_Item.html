@@ -107,6 +107,7 @@
                         var content = $( data ).find( 'content' );
                         $( "#callback-bandname" ).empty().append( data["content"]).append(data["state"]);
                         console.log("添加品牌分类" ,data["state"] ,data["content"])
+                        $.alert(data["content"] + "  " + data["state"])
                     },"json");
                 }
             });
