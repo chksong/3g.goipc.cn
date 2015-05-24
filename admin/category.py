@@ -233,3 +233,32 @@ class editCataName(common.BaseHandle):
                                                                    "cataItems.$.Description":desp}})
 
         self.write({"content":"修改cataItems成功", "state":1})
+
+
+class getCatalistByBrand(common.BaseHandle):
+    def get(self):
+        admin_user = self.get_admin_user()
+        if  not admin_user:
+            self.redirect("/")
+            return
+
+        get_dict = {
+            "content":[],
+            "state":-1
+        }
+
+        brandname = self.get_argument("brandname").strip()
+        if not brandname or len(brandname) <4  :
+            get_dict["content"] = "品牌字段为空或者太短"
+            get_dict["state"] = -1
+            self.write(get_dict)
+            return
+
+        collection = self.db.category
+        db_result = collection.find({"brandname":brandname},{"cataItems":1})
+        for item in db_result:
+            if "cataItems" in item:
+                get_dict["state"] = 1 ;
+                get_dict["brandlist"]= item["cataItems"]
+
+        self.write(get_dict)

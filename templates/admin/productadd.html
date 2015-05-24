@@ -36,16 +36,27 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>产品名称</td><td><input class="" type="text" placeholder="请输入产品名称"></td>
+                        <td>产品名称</td><td><input class="span5" type="text" placeholder="请输入产品名称"></td>
                     </tr>
                      <tr>
-                         <td>品牌分类</td><td><select >
-                                                  <option>1</option>
-                                                  <option>2</option>
-                                                </select></td>
+                         <td>品牌分类</td>
+                         <td>
+                             <select id="brandsel">
+                                 {% for brand in info_dict["brandlist"] %}
+                                    <option> {{ escape(brand) }}</option>
+                                 {% end %}
+                              </select>
+                         </td>
                      </tr>
                       <tr>
-                         <td>产品分类</td> <td> <select >  </select></td>
+                         <td>产品分类</td>
+                         <td>
+                              <select id="cataSel" >
+                                {% for cata in info_dict["catalist"] %}
+                                    <option> {{ escape( cata["cataName"]) }}</option>
+                                 {% end %}
+                              </select>
+                          </td>
                      </tr>
                      <tr>
                          <td>关键字</td>
@@ -59,8 +70,8 @@
                          <th>产品图片</th>
                          <td>
                             <div class="input-append">
-                              <input class="" id="appendedInputButton" type="text">
-                              <button class="btn" type="button">Go!</button>
+                              <input class="span5" id="appendedInputButton" type="text">
+                              <button class="btn" type="button">上传图片!</button>
                             </div>
                          </td>
                      </tr>
@@ -78,6 +89,7 @@
 
 
 {% block endJs  %}
+     <script type="text/javascript" src="{{static_url("js/jquery.msgbox.min.js")}}"></script>
      <script>
         $(window).bind('beforeunload',function(){
         //return '您输入的内容尚未保存，确定离开此页面吗？';
@@ -85,14 +97,36 @@
          });
     </script>
 
+    <script>
+        $("#brandsel").change( function() {
+            console.log($("#brandsel option:selected").text())
 
-    <!-- 实例化编辑器 -->
+            $.get("/admin/getCatasByBrand", {"brandname":$("#brandsel option:selected").text()},
+                    function( data )
+                    {
+                        $("#cataSel").empty()
+                        if(data["state"] >0 )  {
+                            for (index in data["brandlist"]) {
+                                var cataItem =data["brandlist"][index]
+                                $("#cataSel").append('<option>' + data["brandlist"][index]["cataName"] + '</option>')
+                            }
+                        }
+                        else {
+                        }
+                    },"json");
+
+        })
+    </script>
+
+
+    <!-- 实例化编辑器
     <script type="text/javascript">
         var ue = UE.getEditor('container');
          function isFocus(e){
         alert(UE.getEditor('editor').isFocus());
         UE.dom.domUtils.preventDefault(e)
     }
+    -->
 
     </script>
 
