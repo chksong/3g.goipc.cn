@@ -7,9 +7,12 @@
     <script type="text/javascript" src={{static_url("ueditor/ueditor.config.js")}}></script>
     <!-- 编辑器源码文件 -->
     <script type="text/javascript" src={{static_url("ueditor/ueditor.all.js")}}></script>
-
-
-
+    <style>
+        input{border:1px solid #ff9900;}
+        p {float:left}
+        .file {position:absolute;top:20px;right:300px;top:0; right:73px;width:0px;height:30px;filter:alpha(opacity=0);
+        -moz-opacity:0;opacity:0;}
+    </style>
 
 {% end %}
 
@@ -18,10 +21,10 @@
 
     <div class="container">
         <div class="row">
-            <div class="span3">
+            <div class="span1">
 
             </div>
-            <div class="span9">
+            <div class="span11">
 
                 <ul class="breadcrumb">
                   <li><a href="#">添加产品</a> <span class="divider">/</span></li>
@@ -31,7 +34,7 @@
                 <thead>
                     <tr>
                         <th>属性</th>
-                        <th class="span7">属性值</th>
+                        <th>属性值</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,14 +70,23 @@
                           <td><textarea class="span7" id="keywords" ></textarea></td>
                      </tr>
                      <tr>
-                         <th>产品图片</th>
+                         <td>产品图片</td>
                          <td>
-                            <div class="input-append">
-                              <input class="span5" id="appendedInputButton" type="text">
-                              <button class="btn" type="button">上传图片!</button>
-                            </div>
+                            <input class="span6" id="productimg" type="text" placeholder="图像的">
+                            <div id="uploadForm_result"></div>
+                            <form id="uploadForm">
+                                <input name="image" type="file" />
+                                <input type="submit" value="Submit" />
+                            </form>
                          </td>
                      </tr>
+                     <tr>
+                         <td>产品信息</td>
+                         <td>
+                            <script class=“span7" id="editor" type="text/plain" style="width:700px;height:500px;"></script>
+                         </td>
+                     </tr>
+                     <tr><td></td> <td><button class="btn btn-primary" type="button">保存 </button></td> </tr>
                 </tbody>
             </table>
 
@@ -89,6 +101,7 @@
 
 
 {% block endJs  %}
+     <script type="text/javascript" src="{{static_url("js/jquery.cookie.js")}}"></script>
      <script type="text/javascript" src="{{static_url("js/jquery.msgbox.min.js")}}"></script>
      <script>
         $(window).bind('beforeunload',function(){
@@ -97,13 +110,49 @@
          });
     </script>
 
+
+
+    <script type="text/javascript">
+      $(document).ready(function (e) {
+    $("#uploadForm").on('submit',(function(e) {
+
+        $.ajax({
+            url: "/admin/uploadimage",
+            type: "POST",
+            data:  new FormData(this),
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(data){
+                if (data["state"] == "SUCCESS") {
+                    $("#productimg").(data["url"]);
+                }
+                else {
+                     $("#uploadForm_result").html(data["state"]);
+                }
+            }
+       });
+         e.preventDefault();
+    }));
+});
+
+    </script>
+
+
+
     <script>
+
+
+
+
         $("#brandsel").change( function() {
             console.log($("#brandsel option:selected").text())
 
             $.get("/admin/getCatasByBrand", {"brandname":$("#brandsel option:selected").text()},
                     function( data )
                     {
+                        $.alert($.cookie("_xsrf"))
+
                         $("#cataSel").empty()
                         if(data["state"] >0 )  {
                             for (index in data["brandlist"]) {
@@ -119,14 +168,10 @@
     </script>
 
 
-    <!-- 实例化编辑器
+
     <script type="text/javascript">
-        var ue = UE.getEditor('container');
-         function isFocus(e){
-        alert(UE.getEditor('editor').isFocus());
-        UE.dom.domUtils.preventDefault(e)
-    }
-    -->
+        var ue = UE.getEditor('editor');
+
 
     </script>
 
