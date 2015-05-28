@@ -154,7 +154,7 @@
                 brandname = $form.find( 'input[name="brandname"]' ).val(),
                 url = $form.attr( 'action' );
                 if($form.valid()) {
-                    $.post( url, { brandname: brandname},
+                    $.post( url, { brandname: brandname, "_xsrf":$.cookie("_xsrf")},
                     function( data ) {
                         var content = $( data ).find( 'content' );
                         $( "#callback-bandname" ).empty().append( data["content"]).append(data["state"]);
