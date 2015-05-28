@@ -22,7 +22,7 @@ import admin.admin as adminuser
 import admin.category as category
 import admin.product as product
 
-from lib import common, ueditorhander
+from lib import common, ueditorhander, upLoadFile
 
 
 
@@ -47,6 +47,7 @@ class Application(tornado.web.Application):
     def  __init__(self):
         handlers = [
             (r"/admin/ueditorHander", ueditorhander.UEditorManager),
+            (r"/admin/uploadimage", upLoadFile.UpLoadImage),
             (r"/ueditor",product.testUeditor),
 
             (r"/",IndexHandler),
