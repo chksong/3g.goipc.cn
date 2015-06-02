@@ -45,6 +45,8 @@ class AddBrandName(common.BaseHandle):
             self.redirect("/")
             return
 
+        self.check_xsrf_cookie()
+
         brandname = self.get_argument("brandname").strip()
         if not brandname or len(brandname) <6 :
             self.write({"content":"品牌字段为空或者太短", "state":-1})
