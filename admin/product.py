@@ -39,10 +39,51 @@ class addProduct(common.BaseHandle):
         for item in db_result:
             get_dict["brandlist"].append(item["brandname"])
 
-        print get_dict
+        #print get_dict
+        #get_dict["productname"]="IPC610"
+
 
 
         self.render("admin/productadd.html",admin_user=admin_user,info_dict=get_dict)
 
     def post(self):
-        pass
+        admin_user = self.get_admin_user()
+        if  not admin_user:
+            self.redirect("/")
+            return
+
+        name = self.get_argument("name")
+        cata = self.get_argument("cata")
+        brand = self.get_argument("brand")
+        collection = self.db.project
+
+        rslt = collection.find({"name":name ,"cata" : cata}, {"name":1})
+        if rslt.count():
+            get_dict = {
+                "content":"产品名称已经存在",
+                "state":-1 ,
+            }
+            self.write(get_dict)
+
+
+        brand = self.get_argument("brand")
+        keywords= self.get_argument("keywords")
+        desp= self.get_argument("desp")
+        context = self.get_argument("context")
+        images = self.get_argument("image")
+
+        collection.insert({"name":name, "brand":brand, "cata":cata ,"keywords":keywords ,
+                           "desp":desp,"image":images, "context":context})
+
+        self.write({"content":"产品添加成功", "state":1 ,})
+
+class listProduct(common.BaseHandle):
+    def get(self):
+        admin_user = self.get_admin_user()
+        if  not admin_user:
+            self.redirect("/")
+            return
+
+        self.render("admin/productadd.html",admin_user=admin_user,info_dict=get_dict)
+
+
