@@ -58,7 +58,7 @@ class addProduct(common.BaseHandle):
         brand = self.get_argument("brand")
 
         collection = self.db.project
-        rslt = collection.find({"name":name ,"cata" : cata}, {"name":1})
+        rslt = collection.find({"title":name ,"cata" : cata}, {"name":1})
         if rslt.count():
             get_dict = {
                 "content":"产品名称已经存在",
@@ -86,6 +86,7 @@ class listProduct(common.BaseHandle):
         if  not admin_user:
             self.redirect("/")
             return
+
         arr_product = []
         item= {}
         collection = self.db.project
@@ -103,7 +104,30 @@ class listProduct(common.BaseHandle):
 
 class editProduct(common.BaseHandle):
     def get(self, *args, **kwargs):
-        pass
+        admin_user = self.get_admin_user()
+        if  not admin_user:
+            self.redirect("/")
+            return
+
+        get_dict = {
+            "brandlist":[],
+            "catalist":[]
+        }
+
+        # catalist 默认只添加 研华的catalist
+        collection = self.db.category
+        db_result = collection.find({},{"brandname":1 ,"cataItems":1})
+        get_dict["catalist"] = db_result[0]["cataItems"]
+        for item in db_result:
+            get_dict["brandlist"].append(item["brandname"])
+
+
+        pid =self.get_argument("pid")
+        collection = self.db.project
+        rslt = collection.find({"_id":ObjectId(pid) })
+        for item in rslt :
+            print item["context"]
+            self.render("admin/productedit.html" ,admin_user=admin_user , info_dict= get_dict ,productInfo =item)
 
 
 class deleProduct(common.BaseHandle):

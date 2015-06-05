@@ -1,0 +1,182 @@
+{% extends "../base.html" %}
+
+{% block head %}
+
+
+    <!-- 配置文件 -->
+    <script type="text/javascript" src={{static_url("ueditor/ueditor.config.js")}}></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src={{static_url("ueditor/ueditor.all.js")}}></script>
+    <style>
+        input{border:1px solid #ff9900;}
+        p {float:left}
+        .file {position:absolute;top:20px;right:300px;top:0; right:73px;width:0px;height:30px;filter:alpha(opacity=0);
+        -moz-opacity:0;opacity:0;}
+    </style>
+
+{% end %}
+
+{% block body %}
+    {% include admin_nav_menu.html  %}
+
+    <div class="container">
+        <div class="row">
+            <div class="span1">
+
+            </div>
+            <div class="span11">
+
+                <ul class="breadcrumb">
+                  <li><a href="#">添加产品</a> <span class="divider">/</span></li>
+                </ul>
+
+                <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>属性</th>
+                        <th>属性值</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                         <td>产品名称</td><td><input class="span5" type="text" value="{{ productInfo["name"]}}" ></td>
+                    </tr>
+                     <tr>
+                         <td>品牌分类</td>
+                         <td>
+                             <select id="brandsel" value="{{ productInfo["brand"]}}">
+                                 {% for brand in info_dict["brandlist"] %}
+                                    <option> {{ escape(brand) }}</option>
+                                 {% end %}
+                              </select>
+                         </td>
+                     </tr>
+                      <tr>
+                         <td>产品分类</td>
+                         <td>
+                              <select id="cataSel" value="{{ productInfo["cata"]}}">
+                                {% for cata in info_dict["catalist"] %}
+                                    <option> {{ escape( cata["cataName"]) }}</option>
+                                 {% end %}
+                              </select>
+                          </td>
+                     </tr>
+                     <tr>
+                         <td>关键字</td>
+                         <td><textarea class="span7" id="keywords" > {{ productInfo["keywords"]}} </textarea></td>
+                     </tr>
+                     <tr>
+                         <td>描述</td>
+                          <td><textarea class="span7" id="keywords">{{ productInfo["desp"]}} </textarea></td>
+                     </tr>
+                     <tr>
+                         <td>产品图片</td>
+                         <td>
+                            <input class="span6" id="productimg" type="text" placeholder="图像的" value="{{ productInfo["image"]}}">
+                            <div id="uploadForm_result"></div>
+                            <form id="uploadForm">
+                                <input name="image" type="file" />
+                                <input type="submit" value="Submit" />
+                            </form>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td>产品信息</td>
+                         <td>
+                            <script class=“span7" id="editor" type="text/plain" style="width:700px;height:500px;"></script>
+                         </td>
+                     </tr>
+                     <tr><td></td> <td><button class="btn btn-primary" type="button">保存 </button></td> </tr>
+                </tbody>
+            </table>
+
+            </div>
+        </div>
+    </div>
+{% end %}
+
+
+{% block footer %}
+{% end %}
+
+
+{% block endJs  %}
+     <script type="text/javascript" src="{{static_url("js/jquery.cookie.js")}}"></script>
+     <script type="text/javascript" src="{{static_url("js/jquery.msgbox.min.js")}}"></script>
+     <script>
+        $(window).bind('beforeunload',function(){
+        //return '您输入的内容尚未保存，确定离开此页面吗？';
+         $.post( "/admin/logout");
+         });
+    </script>
+
+
+
+    <script type="text/javascript">
+    $(document).ready(function (e) {
+    $("#uploadForm").on('submit',(function(e) {
+
+        $.ajax({
+            url: "/admin/uploadimage",
+            type: "POST",
+            data:  new FormData(this),
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(data){
+                if (data["state"] == "SUCCESS") {
+                    $("#productimg").val(data["url"]);
+                }
+                else {
+                     $("#productimg").val(data["state"]);
+                }
+            }
+       });
+         e.preventDefault();
+    }));
+});
+
+    </script>
+
+
+
+    <script>
+
+
+
+
+        $("#brandsel").change( function() {
+            console.log($("#brandsel option:selected").text())
+
+            $.get("/admin/getCatasByBrand", {"brandname":$("#brandsel option:selected").text()},
+                    function( data )
+                    {
+//                        $.alert($.cookie("_xsrf"))
+
+                        $("#cataSel").empty()
+                        if(data["state"] >0 )  {
+                            for (index in data["brandlist"]) {
+                                var cataItem =data["brandlist"][index]
+                                $("#cataSel").append('<option>' + data["brandlist"][index]["cataName"] + '</option>')
+                            }
+                        }
+                        else {
+                        }
+                    },"json");
+
+        })
+    </script>
+
+
+
+    <script type="text/javascript">
+
+        UE.getEditor('editor').ready(function(){
+            UE.getEditor('editor').setContent(" {{ productInfo["context"]}} ");
+        })
+
+    </script>
+
+
+
+{% end %}
