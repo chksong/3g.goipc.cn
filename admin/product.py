@@ -6,6 +6,7 @@
 # 管理员登录验证
 
 import  pymongo
+from  bson import  ObjectId
 from lib import common
 import  logging
 
@@ -55,8 +56,8 @@ class addProduct(common.BaseHandle):
         name = self.get_argument("name")
         cata = self.get_argument("cata")
         brand = self.get_argument("brand")
-        collection = self.db.project
 
+        collection = self.db.project
         rslt = collection.find({"name":name ,"cata" : cata}, {"name":1})
         if rslt.count():
             get_dict = {
@@ -75,7 +76,9 @@ class addProduct(common.BaseHandle):
         collection.insert({"name":name, "brand":brand, "cata":cata ,"keywords":keywords ,
                            "desp":desp,"image":images, "context":context})
 
-        self.write({"content":"产品添加成功", "state":1 ,})
+        self.write({"content":"产品添加成功", "state":1 })
+
+
 
 class listProduct(common.BaseHandle):
     def get(self):
@@ -83,7 +86,26 @@ class listProduct(common.BaseHandle):
         if  not admin_user:
             self.redirect("/")
             return
+        arr_product = []
+        item= {}
+        collection = self.db.project
+        rslt = collection.find({}, {"_id":1 ,"name":1 ,"brand":1 , "cata":1})
+        for row_item in rslt:
+            item["id"] = str(row_item["_id"])
+            item["name"] = row_item["name"]
+            item["brand"] = row_item["brand"]
+            item["cata"] = row_item["cata"]
+            arr_product.append(item)
 
-        self.render("admin/productadd.html",admin_user=admin_user,info_dict=get_dict)
+        self.render("admin/productlist.html",admin_user=admin_user ,arrProduct= arr_product)
 
 
+
+class editProduct(common.BaseHandle):
+    def get(self, *args, **kwargs):
+        pass
+
+
+class deleProduct(common.BaseHandle):
+    def get(self, *args, **kwargs):
+        pass

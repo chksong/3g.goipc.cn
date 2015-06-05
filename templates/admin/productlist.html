@@ -1,0 +1,88 @@
+{% extends "../base.html" %}
+
+{% block head %}
+
+
+    <!-- 配置文件 -->
+    <script type="text/javascript" src={{static_url("ueditor/ueditor.config.js")}}></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src={{static_url("ueditor/ueditor.all.js")}}></script>
+    <style>
+        input{border:1px solid #ff9900;}
+        p {float:left}
+        .file {position:absolute;top:20px;right:300px;top:0; right:73px;width:0px;height:30px;filter:alpha(opacity=0);
+        -moz-opacity:0;opacity:0;}
+    </style>
+
+{% end %}
+
+{% block body %}
+    {% include admin_nav_menu.html  %}
+
+    <div class="container">
+        <div class="row">
+
+            <div class="span12">
+
+                <ul class="breadcrumb">
+                  <li ><a href="#">查看产品</a> <span class="divider">/</span></li>
+                </ul>
+
+                <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th class="span2">编号</th>
+                        <th class="span2">品牌</th>
+                        <th class="span2">分类</th>
+                        <th>标题</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in arrProduct %}
+                    <tr>
+                        <td> <div class="itemid" ></div> </td>
+                        <td>{{ item["brand"]}}</td>
+                        <td>{{ item["cata"]}}</td>
+                        <td>{{ item["name"]}}</td>
+                        <td> <a href="/admin/editProduct?id={{item["id"]}}"> 编辑 </a> <a href="/admin/deleProduct?id={{item["id"]}}">删除</a> </td>
+                    </tr>
+                    {% end%}
+                </tbody>
+            </table>
+
+            </div>
+        </div>
+    </div>
+{% end %}
+
+
+{% block footer %}
+{% end %}
+
+
+{% block endJs  %}
+     <script type="text/javascript" src="{{static_url("js/jquery.cookie.js")}}"></script>
+     <script type="text/javascript" src="{{static_url("js/jquery.msgbox.min.js")}}"></script>
+     <script>
+        $(window).bind('beforeunload',function(){
+        //return '您输入的内容尚未保存，确定离开此页面吗？';
+         $.post( "/admin/logout");
+         });
+    </script>
+
+    <script>
+        <!--添加产品的编号-->
+         $().ready(function() {
+            var items = $(".itemid");
+            $.each(items, function (k, v) { //自定义属性重新和编号赋值
+                console.log(k ,v);
+                $(this).html(k+1);
+            } );
+         }) ;
+
+    </script>
+
+
+
+{% end %}

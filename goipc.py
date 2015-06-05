@@ -66,6 +66,9 @@ class Application(tornado.web.Application):
 
 
             (r"^/admin/addProduct.?$", product.addProduct) ,
+            (r"^/admin/listProduct.?$", product.listProduct) ,
+            (r"^/admin/editProduct.?$", product.editProduct) ,
+            (r"^/admin/deleProduct.?$", product.deleProduct) ,
 
             #(r"^$",IndexHandler),
         ]
