@@ -81,6 +81,7 @@ class Application(tornado.web.Application):
             cookie_secret="akdhdoudisfppplkjiijjji",
             login_url="/auth/login" ,
             debug=True,
+            autoescape=None
         )
         tornado.web.Application.__init__(self,handlers, **setting)
         self.db = pymongo.Connection('localhost',27017).goipc
