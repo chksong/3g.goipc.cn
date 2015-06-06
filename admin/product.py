@@ -73,7 +73,9 @@ class addProduct(common.BaseHandle):
         context = self.get_argument("context")
         images = self.get_argument("image")
 
-        collection.insert({"title":name, "brand":brand, "cata":cata ,"keywords":keywords ,
+        arrKeyWord = keywords.split(",")
+
+        collection.insert({"title":name, "brand":brand, "cata":cata ,"keywords":arrKeyWord ,
                            "desp":desp,"image":images, "context":context})
 
         self.write({"content":"产品添加成功", "state":1 })
@@ -126,7 +128,11 @@ class editProduct(common.BaseHandle):
         collection = self.db.project
         rslt = collection.find({"_id":ObjectId(pid) })
         for item in rslt :
-            print item["context"]
+            separator = ","
+            strKeywords = separator.join(item["keywords"])
+            item["keywords"]=strKeywords
+
+            print item["keywords"]
             self.render("admin/productedit.html" ,admin_user=admin_user , info_dict= get_dict ,productInfo =item)
 
     def post(self, *args, **kwargs):
@@ -144,8 +150,11 @@ class editProduct(common.BaseHandle):
         context = self.get_argument("context")
         images = self.get_argument("image")
 
+
+        arrKeyWord = keywords.split(",")
+
         collection = self.db.project
-        collection.update({"_id":ObjectId(pid)},{"$set" :{"title":name, "brand":brand, "cata":cata ,"keywords":keywords ,
+        collection.update({"_id":ObjectId(pid)},{"$set" :{"title":name, "brand":brand, "cata":cata ,"keywords":arrKeyWord ,
                            "desp":desp,"image":images, "context":context}})
 
         self.write({"content":"修改产品成功", "state":1 })
