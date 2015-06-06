@@ -73,7 +73,7 @@ class addProduct(common.BaseHandle):
         context = self.get_argument("context")
         images = self.get_argument("image")
 
-        collection.insert({"name":name, "brand":brand, "cata":cata ,"keywords":keywords ,
+        collection.insert({"title":name, "brand":brand, "cata":cata ,"keywords":keywords ,
                            "desp":desp,"image":images, "context":context})
 
         self.write({"content":"产品添加成功", "state":1 })
@@ -90,10 +90,10 @@ class listProduct(common.BaseHandle):
         arr_product = []
         item= {}
         collection = self.db.project
-        rslt = collection.find({}, {"_id":1 ,"name":1 ,"brand":1 , "cata":1})
+        rslt = collection.find({}, {"_id":1 ,"title":1 ,"brand":1 , "cata":1})
         for row_item in rslt:
             item["id"] = str(row_item["_id"])
-            item["name"] = row_item["name"]
+            item["title"] = row_item["title"]
             item["brand"] = row_item["brand"]
             item["cata"] = row_item["cata"]
             arr_product.append(item)
@@ -115,11 +115,11 @@ class editProduct(common.BaseHandle):
         }
 
         # catalist 默认只添加 研华的catalist
-        collection = self.db.category
-        db_result = collection.find({},{"brandname":1 ,"cataItems":1})
-        get_dict["catalist"] = db_result[0]["cataItems"]
-        for item in db_result:
-            get_dict["brandlist"].append(item["brandname"])
+        # collection = self.db.category
+        # db_result = collection.find({},{"brandname":1 ,"cataItems":1})
+        # get_dict["catalist"] = db_result[0]["cataItems"]
+        # for item in db_result:
+        #     get_dict["brandlist"].append(item["brandname"])
 
 
         pid =self.get_argument("pid")
@@ -131,5 +131,14 @@ class editProduct(common.BaseHandle):
 
 
 class deleProduct(common.BaseHandle):
-    def get(self, *args, **kwargs):
-        pass
+    def post(self, *args, **kwargs):
+        admin_user = self.get_admin_user()
+        if  not admin_user:
+            self.redirect("/")
+            return
+
+        pid =self.get_argument("pid")
+
+        collection = self.db.project
+        db_result = collection.remove({"_id":ObjectId(pid)})
+        self.write({"content":"删除成功", "state":1})

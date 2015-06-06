@@ -44,8 +44,8 @@
                         <td> <div class="itemid" ></div> </td>
                         <td>{{ item["brand"]}}</td>
                         <td>{{ item["cata"]}}</td>
-                        <td>{{ item["name"]}}</td>
-                        <td> <a href="/admin/editProduct?id={{item["id"]}}"> 编辑 </a> <a href="/admin/deleProduct?id={{item["id"]}}">删除</a> </td>
+                        <td>{{ item["title"]}}</td>
+                        <td> <a href="/admin/editProduct?pid={{item["id"]}}"> 编辑 </a> <a class="delBtn"  hrefval="{{item["id"]}}">删除</a> </td>
                     </tr>
                     {% end%}
                 </tbody>
@@ -80,7 +80,21 @@
                 $(this).html(k+1);
             } );
          }) ;
+    </script>
 
+    <script>
+        <!--删除产品-->
+         $(".delBtn").click(function() {
+             var pid = $(this).attr("hrefval")
+             $.confirm(("确认删除产品"),function(bool){
+                        if(bool) {
+                            $.post("/admin/deleProduct",{"pid": pid},
+                                function(data) {
+                                    $.alert(data["content"])
+                                } );
+                        }}
+             );
+         }) ;
     </script>
 
 
