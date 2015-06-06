@@ -39,27 +39,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                         <td>产品名称</td><td><input class="span5" type="text" value="{{ productInfo["name"]}}" ></td>
+                         <td>产品名称</td><td><input id="productname" class="span5" type="text" pid="{{ productInfo["_id"]}}" value="{{ productInfo["title"]}}" ></td>
                     </tr>
                      <tr>
                          <td>品牌分类</td>
                          <td>
-                             <select id="brandsel" value="{{ productInfo["brand"]}}">
-                                 {% for brand in info_dict["brandlist"] %}
-                                    <option> {{ escape(brand) }}</option>
-                                 {% end %}
-                              </select>
+                             <input id="brandsel" class="span5" type="text" value="{{ productInfo["brand"]}}" >
                          </td>
                      </tr>
                       <tr>
                          <td>产品分类</td>
                          <td>
-                              <select id="cataSel" value="{{ productInfo["cata"]}}">
-                                {% for cata in info_dict["catalist"] %}
-                                    <option> {{ escape( cata["cataName"]) }}</option>
-                                 {% end %}
-                              </select>
-                          </td>
+                              <input id="cataSel" class="span5" type="text" value="{{ productInfo["cata"]}}" >
+                         </td>
                      </tr>
                      <tr>
                          <td>关键字</td>
@@ -67,7 +59,7 @@
                      </tr>
                      <tr>
                          <td>描述</td>
-                          <td><textarea class="span7" id="keywords">{{ productInfo["desp"]}} </textarea></td>
+                          <td><textarea class="span7" id="desp">{{ productInfo["desp"]}} </textarea></td>
                      </tr>
                      <tr>
                          <td>产品图片</td>
@@ -83,10 +75,11 @@
                      <tr>
                          <td>产品信息</td>
                          <td>
-                            <script class=“span7" id="editor" type="text/plain" style="width:700px;height:500px;"></script>
+                            <script class=“span7" id="editor" type="text/plain" style="width:700px;height:500px;">
+                            </script>
                          </td>
                      </tr>
-                     <tr><td></td> <td><button class="btn btn-primary" type="button">保存 </button></td> </tr>
+                     <tr><td></td> <td><button id="btnSaveProduct" class="btn btn-primary" type="button">保存 </button></td> </tr>
                 </tbody>
             </table>
 
@@ -111,7 +104,7 @@
     </script>
 
 
-
+    <!--上传图像-->
     <script type="text/javascript">
     $(document).ready(function (e) {
     $("#uploadForm").on('submit',(function(e) {
@@ -138,21 +131,20 @@
 
     </script>
 
+    <!--百度控件初始化-->
+     <script type="text/javascript">
+        UE.getEditor('editor').ready(function(){
+            UE.getEditor('editor').setContent('{{ productInfo["context"]}}');
+        })
+    </script>
 
-
+     <!--关联品牌和分类-->
     <script>
-
-
-
-
         $("#brandsel").change( function() {
             console.log($("#brandsel option:selected").text())
-
             $.get("/admin/getCatasByBrand", {"brandname":$("#brandsel option:selected").text()},
                     function( data )
                     {
-//                        $.alert($.cookie("_xsrf"))
-
                         $("#cataSel").empty()
                         if(data["state"] >0 )  {
                             for (index in data["brandlist"]) {
@@ -163,20 +155,31 @@
                         else {
                         }
                     },"json");
-
         })
     </script>
 
 
 
-    <script type="text/javascript">
 
-        UE.getEditor('editor').ready(function(){
-            UE.getEditor('editor').setContent(" {{ productInfo["context"]}} ");
-        })
+     <!-- 提交修改的保存  -->
+     <script>
+        $("#btnSaveProduct").click( function() {
+           if ($("#productname").val().length < 2) {
+               alert("产品名称太短")
+               return
+           }
+
+            $.post("/admin/editProduct", {"pid":$("#productname").attr("pid"), "name":$("#productname").val() ,"brand":$("#brandsel").val(),
+               "cata":$("#cataSel").val() ,"image":$("#productimg").val(),"keywords":$("#keywords").val(),
+                        "desp":$("#desp").val(),"context":UE.getEditor('editor').getContent()},
+                function( data ) {
+                    var content = $( data ).find( 'content' );
+                    $.alert( data["content"] + "  " + data["state"]);
+                },"json");
+
+        }) ;
+
 
     </script>
-
-
 
 {% end %}

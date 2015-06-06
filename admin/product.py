@@ -129,6 +129,31 @@ class editProduct(common.BaseHandle):
             print item["context"]
             self.render("admin/productedit.html" ,admin_user=admin_user , info_dict= get_dict ,productInfo =item)
 
+    def post(self, *args, **kwargs):
+        admin_user = self.get_admin_user()
+        if  not admin_user:
+            self.redirect("/")
+            return
+
+        pid = self.get_argument("pid")
+        name = self.get_argument("name")
+        cata = self.get_argument("cata")
+        brand = self.get_argument("brand")
+        keywords= self.get_argument("keywords")
+        desp= self.get_argument("desp")
+        context = self.get_argument("context")
+        images = self.get_argument("image")
+
+        collection = self.db.project
+        collection.update({"_id":ObjectId(pid)},{"$set" :{"title":name, "brand":brand, "cata":cata ,"keywords":keywords ,
+                           "desp":desp,"image":images, "context":context}})
+
+        self.write({"content":"修改产品成功", "state":1 })
+        pass
+
+
+
+
 
 class deleProduct(common.BaseHandle):
     def post(self, *args, **kwargs):
