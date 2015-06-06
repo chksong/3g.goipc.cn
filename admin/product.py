@@ -65,6 +65,7 @@ class addProduct(common.BaseHandle):
                 "state":-1 ,
             }
             self.write(get_dict)
+            return
 
 
         brand = self.get_argument("brand")
@@ -90,16 +91,19 @@ class listProduct(common.BaseHandle):
             return
 
         arr_product = []
-        item= {}
+
         collection = self.db.project
         rslt = collection.find({}, {"_id":1 ,"title":1 ,"brand":1 , "cata":1})
         for row_item in rslt:
+            item={}
             item["id"] = str(row_item["_id"])
             item["title"] = row_item["title"]
             item["brand"] = row_item["brand"]
             item["cata"] = row_item["cata"]
+
             arr_product.append(item)
 
+        print arr_product
         self.render("admin/productlist.html",admin_user=admin_user ,arrProduct= arr_product)
 
 
