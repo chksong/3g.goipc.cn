@@ -72,7 +72,7 @@ class Application(tornado.web.Application):
             template_path=os.path.join(os.path.dirname(__file__),"templates"),
             static_path=os.path.join(os.path.dirname(__file__),"static"),
             xsrf_cookires=True,
-            cookie_secret="akdhdoudisfppplkjiijjji",
+            cookie_secret="I321Qu+ZacEL3uMlRPgVkrmmzn1FvKvYhP3Lobc",
             login_url="/auth/login" ,
             debug=True,
             autoescape=None,
