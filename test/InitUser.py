@@ -12,7 +12,7 @@ import  pymongo
 import  pymongo.collection
 import  datetime
 
-sys.path.append("/home/chksong/NewWebSite/V2Goipc")
+sys.path.append("/home/songchengkui/NewWebSite/V2Goipc")
 
 from  lib  import  crypto
 
@@ -55,8 +55,8 @@ def updateMongDB():
 
     #collection.update({"_id":post["_id"]},{"$set":{"passwd":"22222"}})
 
-#testAddMongDB()
-updateMongDB()
+testAddMongDB()
+#updateMongDB()
 
 
 
