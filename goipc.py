@@ -17,6 +17,8 @@ import  pymongo
 from tornado.options import define, options
 from  tornado.log import  access_log
 
+import sys
+sys.path.append("/home/songchengkui/NewWebSite/V2Goipc")
 
 import admin.admin as adminuser
 import admin.category as category
@@ -25,7 +27,7 @@ import admin.product as product
 from lib import common, ueditorhander, upLoadFile
 
 
-define("port",default=8888,help="run on the given port", type=int)
+define("port",default=20000,help="run on the given port", type=int)
 
 
 
