@@ -5,17 +5,21 @@
 #
 # 测试 mongdb
 
+import sys
+
+
 import  pymongo
 import  pymongo.collection
-
 import  datetime
+
+sys.path.append("/home/chksong/NewWebSite/V2Goipc")
 
 from  lib  import  crypto
 
 print datetime.datetime.utcnow()
 
 
-con = pymongo.Connection('localhost',27017)
+con = pymongo.MongoClient('localhost',27017)
 db = con.goipc
 collection = db.admins
 
