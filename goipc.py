@@ -78,7 +78,7 @@ class Application(tornado.web.Application):
             autoescape=None,
         )
         tornado.web.Application.__init__(self,handlers, **setting)
-        self.db = pymongo.Connection('localhost',27017).goipc
+        self.db = pymongo.MongoClient('localhost',27017).goipc
 
 
 
