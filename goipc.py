@@ -6,6 +6,8 @@
 
 
 import  os.path
+import  getopt
+
 import  tornado
 import  tornado.auth
 import  tornado.httpserver
@@ -27,8 +29,9 @@ import admin.product as product
 from lib import common, ueditorhander, upLoadFile
 
 
-define("port",default=20000,help="run on the given port", type=int)
+define("port",default=8888,help="run on the given port", type=int)
 
+WebPort = 0
 
 
 
@@ -114,8 +117,24 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # opts, args = getopt.getopt(sys.argv[1:], "hp:")
+    # for op, value in opts:
+    #     if op == "-p":
+    #         WebPort = int(value)
+    #     elif op == "-h":
+    #         print "python goipc.py -p 20000"
+    #         sys.exit()
+    #     else:
+    #         print "python goipc.py -p 20000"
+    #         sys.exit()
 
+    # if WebPort == 0 :
+    #     print "python goipc.py -p 20000"
+    #     sys.exit()
+    # else :
+    #     main()
+
+    main()
 
 
 
