@@ -29,7 +29,7 @@ import admin.product as product
 from lib import common, ueditorhander, upLoadFile
 
 
-define("port",default=8888,help="run on the given port", type=int)
+define("port",default=20000,help="run on the given port", type=int)
 
 WebPort = 0
 

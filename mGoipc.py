@@ -22,22 +22,10 @@ from  tornado.log import  access_log
 import sys
 sys.path.append("/home/songchengkui/NewWebSite/V2Goipc")
 
-import admin.admin as adminuser
-import admin.category as category
-import admin.product as product
-
-from lib import common, ueditorhander, upLoadFile
+import  mobile.home as  home
 
 
-define("port",default=8888,help="run on the given port", type=int)
-
-WebPort = 0
-
-
-
-class IndexHandler(common.BaseHandle):
-    def get(self, *args, **kwargs):
-        self.render("index.html",lorm="xxxxx")
+define("port",default=20010,help="run on the given port", type=int)
 
 
 
@@ -45,31 +33,11 @@ class IndexHandler(common.BaseHandle):
 class Application(tornado.web.Application):
     def  __init__(self):
         handlers = [
-            (r"/admin/ueditorHander", ueditorhander.UEditorManager),
-            (r"/admin/uploadimage", upLoadFile.UpLoadImage),
-            (r"/ueditor",product.testUeditor),
 
-            (r"/",IndexHandler),
-            (r"^/admin.?$", adminuser.AdminIndex),
-            (r"/admin/login.?$", adminuser.AdminLogin),
-            (r"^/admin/logout.?$", adminuser.AdminLogout),
-
-            (r"^/admin/category.?$" , category.listCategory),
-            (r"/admin/addbrand.?$",category.AddBrandName),
-            (r"^/admin/deleteBrand.?$", category.deleteBrand) ,
-            (r"^/admin/editBrand.?$", category.editBrand) ,
-            (r"^/admin/addCata.?$", category.AddCataName) ,
-            (r"^/admin/editCata.?$", category.editCataName) ,
-            (r"^/admin/deleCata.?$", category.deleteCataName) ,
-            (r"^/admin/getCatasByBrand.?$", category.getCatalistByBrand) ,
+            (r"/",home.index ),
 
 
-            (r"^/admin/addProduct.?$", product.addProduct) ,
-            (r"^/admin/listProduct.?$", product.listProduct) ,
-            (r"^/admin/editProduct.?$", product.editProduct) ,
-            (r"^/admin/deleProduct.?$", product.deleProduct) ,
 
-            #(r"^$",IndexHandler),
         ]
         setting =dict (
             blog_title=u"北京国信智维科技有限公司",
@@ -77,7 +45,7 @@ class Application(tornado.web.Application):
             template_path=os.path.join(os.path.dirname(__file__),"templates"),
             static_path=os.path.join(os.path.dirname(__file__),"static"),
             xsrf_cookires=True,
-            cookie_secret="I321Qu+ZacEL3uMlRPgVkrmmzn1FvKvYhP3Lobc",
+            cookie_secret="fB6aNey0kh/F67KeMptM/BAWmlo=c",
             login_url="/auth/login" ,
             debug=True,
             autoescape=None,
