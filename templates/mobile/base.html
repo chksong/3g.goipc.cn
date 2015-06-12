@@ -1,0 +1,37 @@
+
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> {{ escape(handler.settings["blog_title"]) }}</title>
+
+    <link rel="stylesheet" media="screen" href="{{static_url("bootstrap3/css/bootstrap.min.css")}}">
+    <link rel="stylesheet" media="screen" href="{{static_url("css/3gsite.css")}}">
+
+    <!--[if lt IE 9]>
+    <script src="{{static_url("js/html5shiv.min.js")}}"></script>
+    <![endif]-->
+
+
+
+
+
+    {% block head %}{% end %}
+
+  </head>
+  <body>
+
+
+     {% block body %}{% end %}
+
+     {% block footer %}{% end %}
+
+    <script type="text/javascript" src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+    <script type="text/javascript" src="{{static_url("bootstrap3/js/bootstrap.min.js")}}" ></script>
+    {% block endJs  %}  {% end %}
+  </body>
+
+</html>
+
