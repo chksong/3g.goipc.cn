@@ -148,7 +148,7 @@
             $.get("/admin/getCatasByBrand", {"brandname":$("#brandsel option:selected").text()},
                     function( data )
                     {
-                        $.alert($.cookie("_xsrf"))
+
 
                         $("#cataSel").empty()
                         if(data["state"] >0 )  {
