@@ -55,7 +55,7 @@ class Application(tornado.web.Application):
             (r"^/admin/logout.?$", adminuser.AdminLogout),
 
             (r"^/admin/category.?$" , category.listCategory),
-            (r"/admin/addbrand.?$",category.AddBrandName),
+            (r"^/admin/addbrand.?$",category.AddBrandName),
             (r"^/admin/deleteBrand.?$", category.deleteBrand) ,
             (r"^/admin/editBrand.?$", category.editBrand) ,
             (r"^/admin/addCata.?$", category.AddCataName) ,
