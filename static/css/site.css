@@ -2,6 +2,9 @@ body {
     padding: 50px    ;
     align-items:center;
 }
+.table {
+    font-size: 14px;
+}
 
 .menu-item-right {
 	padding-right: 0

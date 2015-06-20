@@ -33,6 +33,11 @@ from common import BaseHandle
 
 class UpLoadImage (BaseHandle):
     def post(self):
+        admin_user = self.get_admin_user()
+        if  not admin_user:
+            self.redirect("/")
+            return
+
         config = {
             'pathFormat':"static/upload/file/%04d-%02d-%02d/" ,
             'maxSize':2048000,

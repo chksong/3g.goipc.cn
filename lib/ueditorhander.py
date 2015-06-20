@@ -26,17 +26,16 @@ def loadUeditorJson():
     except :
         ueditor_json = {}
 
-class GetUpFiles(BaseHandle):
-    def get(self):
-
-        self.wirte("")
-        pass
-
 
 class UEditorManager(BaseHandle):
     def get(self):
+        admin_user = self.get_admin_user()
+        if  not admin_user:
+            self.redirect("/")
+            return
+
         if 0 == len(ueditor_json):
-                loadUeditorJson()
+            loadUeditorJson()
 
         action = self.get_argument("action")
         if action=="config":
@@ -52,6 +51,12 @@ class UEditorManager(BaseHandle):
 
 
     def post(self):
+
+        admin_user = self.get_admin_user()
+        if  not admin_user:
+            self.redirect("/")
+            return
+
         if 0 == len(ueditor_json):
              loadUeditorJson()
 

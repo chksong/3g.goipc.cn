@@ -1,8 +1,38 @@
 
 body {
-;
+    padding-left: 1px;
+    padding-right: 1px;
 }
+
+.no_padding_left {
+    padding-right: 2px;
+    padding-left: 0px;
+}
+
+.no_padding_right {
+    padding-right: 0px;
+    padding-left: 1px;
+}
+
+.goipc_panel {
+    margin-bottom: 3px;
+}
+
+.goipc_glyphicon {
+    top :3px ;
+}
+
 
 .menu_button {
     border-radius: 0px;
+}
+
+.goipc_brand {
+    padding-top: 2px;
+    margin: 0 0 0 0;
+    padding-bottom: 0;
+}
+
+.goipc_recommend {
+    margin: 3px 0 0 0;
 }
