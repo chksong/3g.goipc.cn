@@ -2,8 +2,20 @@ body {
     padding: 50px    ;
     align-items:center;
 }
+
+textarea  {
+    margin-bottom: 0;
+}
+
+input[type="text"] {
+    margin-bottom: 0;
+}
+
+select {
+     margin-bottom: 0;
+}
 .table {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .menu-item-right {

@@ -25,6 +25,7 @@ sys.path.append("/home/songchengkui/NewWebSite/V2Goipc")
 import admin.admin as adminuser
 import admin.category as category
 import admin.product as product
+import admin.usandnews as News
 
 from lib import common, ueditorhander, upLoadFile
 
@@ -68,6 +69,11 @@ class Application(tornado.web.Application):
             (r"^/admin/listProduct.?$", product.listProduct) ,
             (r"^/admin/editProduct.?$", product.editProduct) ,
             (r"^/admin/deleProduct.?$", product.deleProduct) ,
+
+            (r"^/admin/listNews.?$", News.ListNews) ,
+            (r"^/admin/addNew.?$", News.AddNews) ,
+            (r"^/admin/editNew.?$", News.editNew) ,
+            (r"^/admin/deleNew.?$", News.deleteNew) ,
 
             #(r"^$",IndexHandler),
         ]

@@ -39,38 +39,23 @@
                 </thead>
                 <tbody>
                     <tr>
-                         <td>产品名称</td><td><input id="productname" class="span5" type="text" pid="{{ productInfo["_id"]}}" value="{{ productInfo["title"]}}" ></td>
+                        <td>新闻标题</td>
+                        <td><input id="newstitle" class="span5" type="text" pid="{{ newsItem["_id"]}}" value="{{ newsItem["title"]}}" ></td>
                     </tr>
-                     <tr>
-                         <td>品牌分类</td>
-                         <td>
-                             <input id="brandsel" class="span5" type="text" value="{{ productInfo["brand"]}}" >
-                         </td>
-                     </tr>
-                      <tr>
+
+                    <tr>
                          <td>产品分类</td>
                          <td>
-                              <input id="cataSel" class="span5" type="text" value="{{ productInfo["cata"]}}" >
+                              <input id="cataSel" class="span5" type="text" value="{{ newsItem["cata"]}}" >
                          </td>
                      </tr>
                      <tr>
                          <td>关键字</td>
-                         <td><textarea class="span7" id="keywords" > {{ productInfo["keywords"]}} </textarea></td>
+                         <td><textarea class="span7" id="keywords" > {{ newsItem["keywords"]}} </textarea></td>
                      </tr>
                      <tr>
                          <td>描述</td>
-                          <td><textarea class="span7" id="desp">{{ productInfo["desp"]}} </textarea></td>
-                     </tr>
-                     <tr>
-                         <td>产品图片</td>
-                         <td>
-                            <input class="span6" id="productimg" type="text" placeholder="图像的" value="{{ productInfo["image"]}}">
-                            <div id="uploadForm_result"></div>
-                            <form id="uploadForm">
-                                <input name="image" type="file" />
-                                <input type="submit" value="Submit" />
-                            </form>
-                         </td>
+                         <td><textarea class="span7" id="desp">{{ newsItem["desp"]}} </textarea></td>
                      </tr>
                      <tr>
                          <td>产品信息</td>
@@ -79,7 +64,7 @@
                             </script>
                          </td>
                      </tr>
-                     <tr><td></td> <td><button id="btnSaveProduct" class="btn btn-primary" type="button">保存 </button></td> </tr>
+                     <tr><td></td> <td><button id="btnSaveNew" class="btn btn-primary" type="button">保存 </button></td> </tr>
                 </tbody>
             </table>
 
@@ -134,52 +119,28 @@
     <!--百度控件初始化-->
      <script type="text/javascript">
         UE.getEditor('editor').ready(function(){
-            UE.getEditor('editor').setContent('{{ productInfo["context"]}}');
+            UE.getEditor('editor').setContent('{{ newsItem["context"]}}');
         })
     </script>
-
-     <!--关联品牌和分类-->
-    <script>
-        $("#brandsel").change( function() {
-            console.log($("#brandsel option:selected").text())
-            $.get("/admin/getCatasByBrand", {"brandname":$("#brandsel option:selected").text()},
-                    function( data )
-                    {
-                        $("#cataSel").empty()
-                        if(data["state"] >0 )  {
-                            for (index in data["brandlist"]) {
-                                var cataItem =data["brandlist"][index]
-                                $("#cataSel").append('<option>' + data["brandlist"][index]["cataName"] + '</option>')
-                            }
-                        }
-                        else {
-                        }
-                    },"json");
-        })
-    </script>
-
-
 
 
      <!-- 提交修改的保存  -->
      <script>
-        $("#btnSaveProduct").click( function() {
-           if ($("#productname").val().length < 2) {
+    $("#btnSaveNew").click( function() {
+           if ($("#newstitle").val().length < 2) {
                alert("产品名称太短")
                return
            }
 
-            $.post("/admin/editProduct", {"pid":$("#productname").attr("pid"), "name":$("#productname").val() ,"brand":$("#brandsel").val(),
-               "cata":$("#cataSel").val() ,"image":$("#productimg").val(),"keywords":$("#keywords").val(),
-                        "desp":$("#desp").val(),"context":UE.getEditor('editor').getContent()},
-                function( data ) {
-                    var content = $( data ).find( 'content' );
-                    $.alert( data["content"] + "  " + data["state"]);
-                },"json");
+        $.post("/admin/editNew", {"pid":$("#newstitle").attr("pid"), "title":$("#newstitle").val() ,
+           "cata":$("#cataSel").val() ,"keywords":$("#keywords").val(),
+                    "desp":$("#desp").val(),"context":UE.getEditor('editor').getContent()},
+            function( data ) {
+                var content = $( data ).find( 'content' );
+                $.alert( data["content"] + "  " + data["state"]);
+            },"json");
 
         }) ;
-
-
-    </script>
+  </script>
 
 {% end %}

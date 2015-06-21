@@ -27,7 +27,7 @@
             <div class="span11">
 
                 <ul class="breadcrumb">
-                  <li><a href="#">添加产品</a> <span class="divider">/</span></li>
+                  <li><a href="#">添加新闻或者公司文字</a> <span class="divider">/</span></li>
                 </ul>
 
                 <table class="table table-bordered ">
@@ -39,54 +39,32 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>产品名称</td><td><input id="productname" class="span5" type="text" placeholder="请输入产品名称"></td>
-                    </tr>
-                     <tr>
-                         <td>品牌分类</td>
+                         <td>类别</td>
                          <td>
-                             <select id="brandsel">
-                                 {% for brand in info_dict["brandlist"] %}
-                                    <option> {{ escape(brand) }}</option>
-                                 {% end %}
-                              </select>
+                             <select id="catasel">
+                                 <option>关于公司</option>
+                                 <option>新闻</option>
+                             </select>
                          </td>
-                     </tr>
-                      <tr>
-                         <td>产品分类</td>
-                         <td>
-                              <select id="cataSel" >
-                                {% for cata in info_dict["catalist"] %}
-                                    <option> {{ escape( cata["cataName"]) }}</option>
-                                 {% end %}
-                              </select>
-                          </td>
-                     </tr>
-                     <tr>
+                    </tr>
+                    <tr>
+                        <td>标题</td><td><input id="newstitle" class="span6" type="text" placeholder="请输入标题"></td>
+                    </tr>
+                    <tr>
                          <td>关键字</td>
                          <td><textarea rows="1" class="span7" id="keywords" row></textarea></td>
-                     </tr>
+                    </tr>
                      <tr>
                          <td>描述</td>
                           <td><textarea class="span7" id="desp" ></textarea></td>
                      </tr>
                      <tr>
-                         <td>产品图片</td>
+                         <td>内容</td>
                          <td>
-                            <input class="span6" id="productimg" type="text" placeholder="图像的">
-                            <div id="uploadForm_result"></div>
-                            <form id="uploadForm">
-                                <input name="image" type="file" />
-                                <input type="submit" value="Submit" />
-                            </form>
+                            <script class="span7" id="editor" type="text/plain" style="width:700px;height:400px;"></script>
                          </td>
                      </tr>
-                     <tr>
-                         <td>产品信息</td>
-                         <td>
-                            <script class=“span7" id="editor" type="text/plain" style="width:700px;height:400px;"></script>
-                         </td>
-                     </tr>
-                     <tr><td></td> <td><button id="btnSaveProduct" class="btn btn-primary" type="button">保存 </button></td> </tr>
+                     <tr><td></td> <td><button id="btnSaveNew" class="btn btn-primary" type="button">保存 </button></td> </tr>
                 </tbody>
             </table>
 
@@ -140,29 +118,6 @@
 
 
 
-    <!-- 更改品牌--- 改变产品列表  -->
-    <script>
-        $("#brandsel").change( function() {
-            console.log($("#brandsel option:selected").text())
-
-            $.get("/admin/getCatasByBrand", {"brandname":$("#brandsel option:selected").text()},
-                    function( data )
-                    {
-
-
-                        $("#cataSel").empty()
-                        if(data["state"] >0 )  {
-                            for (index in data["brandlist"]) {
-                                var cataItem =data["brandlist"][index]
-                                $("#cataSel").append('<option>' + data["brandlist"][index]["cataName"] + '</option>')
-                            }
-                        }
-                        else {
-                        }
-                    },"json");
-
-        })
-    </script>
 
 
 
@@ -173,15 +128,15 @@
 
       <!-- 提交保存  -->
     <script>
-        $("#btnSaveProduct").click( function() {
-           if ($("#productname").val().length < 2) {
-               alert("产品名称太短")
+        $("#btnSaveNew").click( function() {
+           if ($("#newstitle").val().length < 3) {
+               alert("标题太短")
                return
            }
 
            console.log(  $("#keywords").val() ,UE.getEditor('editor').getContent() )   ;
-            $.post("/admin/addProduct", {"name":$("#productname").val() ,"brand":$("#brandsel").val(),
-               "cata":$("#cataSel").val() ,"image":$("#productimg").val(),"keywords":$("#keywords").val(),
+            $.post("/admin/addNew", {"title":$("#newstitle").val() ,
+               "cata":$("#catasel").val() ,"keywords":$("#keywords").val(),
                         "desp":$("#desp").val(),"context":UE.getEditor('editor').getContent()},
                 function( data ) {
                     var content = $( data ).find( 'content' );

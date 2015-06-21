@@ -31,21 +31,19 @@
                 <table class="table table-bordered ">
                 <thead>
                     <tr>
-                        <th class="span2">编号</th>
-                        <th class="span2">品牌</th>
+                        <th class="span">编号</th>
                         <th class="span2">分类</th>
                         <th>标题</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in arrProduct %}
+                    {% for item in arrNews %}
                     <tr>
                         <td> <div class="itemid" ></div> </td>
-                        <td>{{ item["brand"]}}</td>
                         <td>{{ item["cata"]}}</td>
                         <td>{{ item["title"]}}</td>
-                        <td> <a href="/admin/editProduct?pid={{item["id"]}}"> 编辑 </a> <a class="delBtn"  hrefval="{{item["id"]}}">删除</a> </td>
+                        <td> <a href="/admin/editNew?pid={{item["id"]}}"> 编辑 </a> <a class="delBtn"  hrefval="{{item["id"]}}">删除</a> </td>
                     </tr>
                     {% end%}
                 </tbody>
@@ -86,9 +84,9 @@
         <!--删除产品-->
          $(".delBtn").click(function() {
              var pid = $(this).attr("hrefval")
-             $.confirm(("确认删除产品"),function(bool){
+             $.confirm(("确认这项吗"),function(bool){
                         if(bool) {
-                            $.post("/admin/deleProduct",{"pid": pid},
+                            $.post("/admin/deleNew",{"pid": pid},
                                 function(data) {
                                     $.alert(data["content"])
                                 } );

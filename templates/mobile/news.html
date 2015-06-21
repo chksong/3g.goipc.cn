@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% include nav_menu.html %}
+
+
+<!--400 电话联系-->
+<div class="container-fluid ">
+   <div class="row">
+        <div class="goipc_panel panel">
+              <div class="panel-heading">{{ newsItem["title"]}}</div>
+              <div class="panel-body">
+                {{ newsItem["context"]}}
+              </div>
+        </div>
+   </div>
+</div>
+
+
+
+{% end %}
+
+
+{% block footer %}
+
+{% end %}

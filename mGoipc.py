@@ -23,6 +23,7 @@ import sys
 sys.path.append("/home/songchengkui/NewWebSite/V2Goipc")
 
 import  mobile.home as  home
+import  mobile.view as  view
 
 
 define("port",default=20010,help="run on the given port", type=int)
@@ -33,8 +34,9 @@ define("port",default=20010,help="run on the given port", type=int)
 class Application(tornado.web.Application):
     def  __init__(self):
         handlers = [
-
             (r"/",home.index ),
+
+            (r"^/us/(.*)", view.viewUS),
 
 
 
