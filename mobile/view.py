@@ -19,9 +19,10 @@ from lib import common
 
 class viewUS(common.BaseHandle):
     def get(self, *args, **kwargs):
-
         if len(args) < 1 :
             self.redirect("/")
+
+        info_dict = {}
 
         title = args[0]
         collection = self.db.NEWS
@@ -31,6 +32,9 @@ class viewUS(common.BaseHandle):
             strKeywords = separator.join(item["keywords"])
             item["keywords"]=strKeywords
 
+            info_dict["keywords"] = strKeywords
+            info_dict["desp"] = item["desp"]
+
             print item["keywords"]
-            self.render("mobile/news.html",newsItem =item)
+            self.render("mobile/news.html",newsItem =item, infodict=info_dict)
 
