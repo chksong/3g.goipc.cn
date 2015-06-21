@@ -20,7 +20,7 @@ from tornado.options import define, options
 from  tornado.log import  access_log
 
 import sys
-sys.path.append("/home/songchengkui/NewWebSite/V2Goipc")
+sys.path.append("/home/songchengkui/NewWebSite/V2GoIPC")
 
 import  mobile.home as  home
 import  mobile.view as  view
