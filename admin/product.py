@@ -9,6 +9,7 @@ import  pymongo
 from  bson import  ObjectId
 from lib import common
 import  logging
+import  datetime
 
 
 class testUeditor(common.BaseHandle):
@@ -67,7 +68,7 @@ class addProduct(common.BaseHandle):
             self.write(get_dict)
             return
 
-
+        addtime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         brand = self.get_argument("brand")
         keywords= self.get_argument("keywords")
         desp= self.get_argument("desp")
@@ -76,7 +77,7 @@ class addProduct(common.BaseHandle):
 
         arrKeyWord = keywords.split(",")
 
-        collection.insert({"title":name, "brand":brand, "cata":cata ,"keywords":arrKeyWord ,
+        collection.insert({"title":name, "brand":brand, "cata":cata ,"addtime":addtime ,"keywords":arrKeyWord ,
                            "desp":desp,"image":images, "context":context})
 
         self.write({"content":"产品添加成功", "state":1 })

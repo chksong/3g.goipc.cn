@@ -1,5 +1,10 @@
 import functools
 
+import datetime
+
+
+print datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 def spamrun(fn):
     @functools.wraps(fn)
     def sayspam(*args):
