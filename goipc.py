@@ -52,7 +52,7 @@ class Application(tornado.web.Application):
 
             (r"/",IndexHandler),
             (r"^/admin.?$", adminuser.AdminIndex),
-            (r"/admin/login.?$", adminuser.AdminLogin),
+            (r"^/QAdmin/login.?$", adminuser.AdminLogin),
             (r"^/admin/logout.?$", adminuser.AdminLogout),
 
             (r"^/admin/category.?$" , category.listCategory),
