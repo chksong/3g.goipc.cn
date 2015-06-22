@@ -4,6 +4,10 @@ body {
     padding-right: 1px;
 }
 
+.table {
+    font-size: 14px;
+}
+
 .no_padding_left {
     padding-right: 2px;
     padding-left: 0px;
@@ -17,6 +21,7 @@ body {
 .goipc_panel {
     margin-bottom: 3px;
     margin-top: 3px;
+    border-color: #2e6da4;
 }
 
 .goipc_glyphicon {
@@ -36,4 +41,8 @@ body {
 
 .goipc_recommend {
     margin: 3px 0 0 0;
+}
+
+.goipc_right_pos {
+    margin-right: 8px;
 }
