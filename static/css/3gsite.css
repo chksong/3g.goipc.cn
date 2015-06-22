@@ -46,3 +46,7 @@ body {
 .goipc_right_pos {
     margin-right: 8px;
 }
+
+.no_margin-bottom {
+    margin-bottom: 0px;
+}

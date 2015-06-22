@@ -2,7 +2,7 @@
 
 {% block body %}
 
- {% include nav_menu.html %}
+{% include nav_menu.html %}
 
 
 
@@ -69,7 +69,7 @@
 </div>
 
 
-<!--400 电话联系-->
+<!--400 公司介绍-->
 <div class="container-fluid ">
    <div class="row">
         <div class="goipc_panel panel panel-info">
@@ -88,20 +88,11 @@
    </div>
 </div>
 
-<div class="container-fluid">
-    <div class="row">
-        <ul class="nav nav-pills">
-          <li role="presentation" class="active"><a href="#">Home</a></li>
-          <li role="presentation"><a href="#">Profile</a></li>
-          <li role="presentation"><a href="#">Messages</a></li>
-        </ul>
-    </div>
-</div>
-
 
 {% end %}
 
 
 {% block footer %}
-
+    {% include tel.html %}
+    {% include footer.html %}
 {% end %}

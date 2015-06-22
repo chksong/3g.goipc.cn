@@ -35,6 +35,5 @@ class viewUS(common.BaseHandle):
             info_dict["keywords"] = strKeywords
             info_dict["desp"] = item["desp"]
 
-            print item["keywords"]
             self.render("mobile/news.html",newsItem =item, infodict=info_dict)
 
