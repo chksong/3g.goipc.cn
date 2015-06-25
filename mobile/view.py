@@ -37,3 +37,27 @@ class viewUS(common.BaseHandle):
 
             self.render("mobile/news.html",newsItem =item, infodict=info_dict)
 
+
+class ViewProduct(common.BaseHandle):
+    def get(self, *args, **kwargs):
+        if len(args) != 2:
+            self.redirect("/")
+
+        cata = args[0]
+        title = args[1]
+        info_dict = {}
+
+        collection = self.db.project
+        rslt = collection.find({"title":title ,"cata" : cata})
+        for item in rslt:
+            separator = ","
+            strKeywords = separator.join(item["keywords"])
+            item["keywords"]=strKeywords
+
+            info_dict["keywords"] = strKeywords
+            info_dict["desp"] = item["desp"]
+
+            self.render("mobile/product.html",newsItem =item, infodict=info_dict)
+
+
+
