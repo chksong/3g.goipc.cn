@@ -4,12 +4,18 @@ body {
     padding-right: 1px;
 }
 
+blockquote {
+   border-left-color: rgb(85, 174, 117);
+}
+
+
 .table {
 
 }
 .ke-zeroborder {
     font-size: 12px;
 }
+
 
 
 .no_padding_left {
