@@ -5,8 +5,12 @@ body {
 }
 
 .table {
-    font-size: 14px;
+
 }
+.ke-zeroborder {
+    font-size: 12px;
+}
+
 
 .no_padding_left {
     padding-right: 2px;
