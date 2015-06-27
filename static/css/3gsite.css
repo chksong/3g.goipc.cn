@@ -45,6 +45,7 @@ table {
 
 
 .product_readtimes {
+    float: right;
     color: #a6a5a5;
     font-size: 12px;
     padding-top: 7px;
