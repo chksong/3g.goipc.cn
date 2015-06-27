@@ -13,8 +13,10 @@ blockquote {
 }
 .navbar {
     min-height:0px;
-    padding-left: 1px;
+}
+.goipc_container-fluid {
     padding-right: 1px;
+    padding-left: 1px;
 }
 
 table {
