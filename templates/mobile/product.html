@@ -40,20 +40,11 @@
 
 
 {% block footer %}
-    <div data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+    <div data-spy="affix"  data-offset-bottom="0" style="background: coral">
           hhhhhh
     </div>
 {% end %}
 {% block endJs  %}
-     <script>
-     $('#Fix_Tel').affix({
-          offset: {
-            top: 100,
-            bottom: function () {
-              return (this.bottom = $('.footer').outerHeight(true))
-            }
-          }
-        }) ;
-     </script>
+
 
 {% end %}
