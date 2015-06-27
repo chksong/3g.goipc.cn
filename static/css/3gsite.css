@@ -38,6 +38,10 @@ blockquote {
     top :3px ;
 }
 
+.goipc_nav_path {
+    margin-top: 3px ;
+    margin-bottom: 0px;
+}
 
 .menu_button {
     border-radius: 0px;
