@@ -48,7 +48,7 @@ class ViewProduct(common.BaseHandle):
         info_dict = {}
 
         collection = self.db.project
-        collection.update({"title":title ,"cata" : cata},{"$inc":{"readtimes":1}}, true)
+        collection.update({"title":title ,"cata" : cata},{"$inc":{"readtimes":1}})
 
 
         rslt = collection.find({"title":title ,"cata" : cata})
