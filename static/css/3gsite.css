@@ -11,7 +11,9 @@ blockquote {
    border-radius: 2;
    background-color: #f7f7f9;
 }
-
+.navbar {
+    min-height:0px;
+}
 
 table {
     font-size: 14px;
