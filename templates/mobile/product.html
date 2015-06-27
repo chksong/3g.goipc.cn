@@ -4,18 +4,25 @@
 
 {% include nav_menu.html %}
 
-<!--路径导航-->
-<ol class="goipc_nav_path breadcrumb">
-  <li><a href="#">{{ newsItem["brand"]}}</a></li>
-  <li><a href="#">{{ newsItem["cata"]}}</a></li>
-</ol>
+
+
 
 
 <!--产品信息-->
 <div class="container-fluid ">
    <div class="row">
+
+       <!--路径导航-->
+        <ol class="goipc_nav_path breadcrumb">
+          <li><a href="#">{{ newsItem["brand"]}}</a></li>
+          <li><a href="#">{{ newsItem["cata"]}}</a></li>
+        </ol>
+
+        <!--标题-->
+        <div class="product_title center-block"> <h3>{{ newsItem["title"]}}</h3></div>
+
+        <!--产品内容-->
         <div class="panel">
-              <div class="panel-heading">{{ newsItem["title"]}}</div>
               <div class="panel-body">
                 {{ newsItem["context"]}}
               </div>
