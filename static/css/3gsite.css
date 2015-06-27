@@ -19,15 +19,11 @@ blockquote {
 }
 
 .product_title {
+   margin-top: 5px;
    font-size: 14px;
    color: #1063c7;
-   display: block;
-   margin-right: auto;
-   margin-left: auto;
-
-   font-style: italic;
    font-weight: bold;
-   line-height: 16px;
+   text-align: center;
 }
 
 
