@@ -20,7 +20,10 @@
 
         <!--标题-->
         <div class="product_title"> {{ newsItem["title"]}}</div>
-        <div> <span class="product_time">{{newsItem["addtime"]}}</span></div>
+        <div>
+            <span class="product_time">{{newsItem["addtime"]}}</span>
+            <span class="product_readtimes">访问次数:{{newsItem["readtimes"]}}</span>
+        </div>
 
 
         <!--产品内容-->
