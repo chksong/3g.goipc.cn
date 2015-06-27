@@ -90,3 +90,7 @@ blockquote {
 .no_margin-bottom {
     margin-bottom: 0px;
 }
+
+.firstRow {
+    background-color: #ff7800;
+}
