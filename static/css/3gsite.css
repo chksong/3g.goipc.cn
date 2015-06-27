@@ -19,6 +19,11 @@ blockquote {
     padding-left: 1px;
 }
 
+.goipc_but {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
 table {
     font-size: 14px;
 }
