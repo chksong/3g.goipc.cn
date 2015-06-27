@@ -6,6 +6,8 @@ body {
 
 blockquote {
    border-left-color: rgb(85, 174, 117);
+   font-size: 14px;
+   color: rgb(85, 174, 117);
    border-radius: 2;
    background-color: #f7f7f9;
 }
@@ -38,7 +40,7 @@ blockquote {
     color: #a6a5a5;
     font-size: 12px;
     padding-top: 5px;
-    margin-left: 16px;
+    margin-left: 15px;
 }
 
 
