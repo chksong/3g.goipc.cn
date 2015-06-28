@@ -119,5 +119,5 @@ class ListBrand(common.BaseHandle):
         for item in rslt:
            itembrands.append(item)
 
-        self.render("mobile/listBrandItem.html",brandItems =itembrands, info_dict=info_dict)
+        self.render("mobile/listBrandItem.html",brandItems =itembrands, infodict=info_dict)
 
