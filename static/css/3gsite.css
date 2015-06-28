@@ -127,6 +127,7 @@ table {
     background-color: #ff7800;
 }
 
-.goipc_footer_index {
+.goipc_footer {
+    padding-top: 3px;
     font-size: 10px;
 }
