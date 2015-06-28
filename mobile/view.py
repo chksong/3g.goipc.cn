@@ -33,7 +33,7 @@ class viewUS(common.BaseHandle):
             item["keywords"]=strKeywords
 
             info_dict["keywords"] = strKeywords
-            info_dict["desp"] = item["desp"][:25]
+            info_dict["desp"] = item["desp"]
 
             self.render("mobile/news.html",newsItem =item, infodict=info_dict)
 
@@ -57,7 +57,7 @@ class ViewProduct(common.BaseHandle):
             item["keywords"]=strKeywords
 
             info_dict["keywords"] = strKeywords
-            info_dict["desp"] = item["desp"]
+            info_dict["desp"] = item["desp"][:20]
 
             self.render("mobile/product.html",newsItem =item, infodict=info_dict)
             return
