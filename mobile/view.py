@@ -92,7 +92,7 @@ class ListCata(common.BaseHandle):
 
         self.render("mobile/listCataItem.html",cataItem =itemcatas, infodict=info_dict)
 
-       
+
 
 
 class ListBrand(common.BaseHandle):
