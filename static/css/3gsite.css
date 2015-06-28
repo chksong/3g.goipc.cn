@@ -110,6 +110,17 @@ table {
     margin-bottom: 0px;
 }
 
+.goipc_brandItems {
+    padding-left: 2px ;
+    padding-right: 1px ;
+    margin-top: 2px;
+}
+
+.goipc_media {
+     border-bottom: 1px dashed #2e6da4;;
+}
+
+
 .firstRow {
     background-color: #ff7800;
 }
