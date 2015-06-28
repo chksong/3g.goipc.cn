@@ -18,30 +18,14 @@
         </ol>
 
 
-       <div>
-            <div class="col-xs-6 col-md-3">
-                <a href="#" class="thumbnail">
-                    <img src={{ item["image"]}} alt="...">
-                </a>
-            </div>
-            <div>
-               <h5 class="list-group-item-heading">{{ item["title"] }}</h5>
-                <p class="list-group-item-text">{{ item["desp"] }}</p>
-            </div>
-       </div>
 
-       <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img src="..." alt="...">
-        </a>
-       </div>
-
+        <!--产品列表-->
         <div class="list-group">
           {% for item in brandItems %}
             <div>
                 <div class="col-xs-6 col-md-3">
                     <a href="#" class="thumbnail">
-                        <img src="" alt="...">
+                        <img src="{{ item["title"] }}" alt="...">
                     </a>
                 </div>
                 <div>
