@@ -28,7 +28,9 @@ import  mobile.view as  view
 
 define("port",default=20010,help="run on the given port", type=int)
 
-
+class ErrorHandler(tornado.web.RequestHandler):
+    def get(self, *args, **kwargs):
+        self.render("e404.html",)
 
 
 class Application(tornado.web.Application):
@@ -36,11 +38,14 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/",home.index ),
             (r"^/us/(.*)", view.viewUS),
-            (r"^/product/(.*)/(.*)/(.*)", view.ViewProduct),
+
+            (r"^/brand/(.*)", view.ListBrand),
+            (r"^/cata/(.*)", view.ListCata),
             (r"^/product/(.*)/(.*)", view.ViewProduct),
 
 
 
+            (r"^$",ErrorHandler),
         ]
         setting =dict (
             blog_title=u"北京国信智维科技有限公司",
