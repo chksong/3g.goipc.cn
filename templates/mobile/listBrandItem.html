@@ -14,23 +14,21 @@
 
        <!--路径导航-->
         <ol class="goipc_nav_path breadcrumb">
-          <li><a href="#">{{ newsItem["brand"]}}</a></li>
-          <li><a href="#">{{ newsItem["cata"]}}</a></li>
+          <li><a href="#">{{ info_dict["brand"]}}</a></li>
         </ol>
 
-        <!--标题-->
-        <div class="product_title"> {{ newsItem["title"]}}</div>
-        <div>
-            <span class="product_time">{{newsItem["addtime"]}}</span>  <span class="product_readtimes">访问{{newsItem["readtimes"]}}次</span>
-        </div>
 
-
-        <!--产品内容-->
-        <div class="panel">
-              <div class="panel-body">
-                {{ newsItem["context"]}}
-              </div>
+        <div class="list-group">
+          {% for item in brandItems %}
+          <a href="#" class="list-group-item active">
+            <h4 class="list-group-item-heading">item["title"]</h4>
+            <p class="list-group-item-text">item["desp"]</p>
+          </a>
+          {% end  % }
         </div>
+   </div>
+</div>
+
    </div>
 </div>
 

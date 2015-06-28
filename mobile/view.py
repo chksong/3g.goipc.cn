@@ -86,6 +86,7 @@ class ListCata(common.BaseHandle):
             return
 
         info_dict["brand"] = rslt[0]["brand"]
+        info_dict["cata"] = cata
 
         for item in rslt:
             itemcatas.append(item)
@@ -105,11 +106,12 @@ class ListBrand(common.BaseHandle):
         info_dict = {}
         info_dict["keywords"] = brand
         info_dict["desp"] = brand
+        info_dict["brand"] = brand
 
         collection = self.db.project
         rslt = collection.find({"brand" : brand},{"title":1,"desp":1,"image":1,"cata":1})
         for item in rslt:
-            self.render("mobile/listBrandItem.html",newsItem =item, infodict=info_dict)
+            self.render("mobile/listBrandItem.html",brandItems =item, infodict=info_dict)
             return ;
 
         if 0 == rslt.count():
