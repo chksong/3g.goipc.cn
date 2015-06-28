@@ -61,6 +61,8 @@ class ViewProduct(common.BaseHandle):
             info_dict["desp"] = item["desp"]
 
             self.render("mobile/product.html",newsItem =item, infodict=info_dict)
+            return
 
-
+        if 0 == rslt.count():
+            self.render("404.html")
 
