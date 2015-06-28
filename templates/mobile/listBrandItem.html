@@ -20,29 +20,23 @@
 
 
         <!--产品列表-->
-        <div class="list-group">
+        <div>
           {% for item in brandItems %}
-            <div>
-                <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail">
-                        <img src="{{ item["image"] }}" alt="...">
-                    </a>
-                </div>
-                <div>
-                   <h5 class="list-group-item-heading">{{ item["title"] }}</h5>
-                    <p class="list-group-item-text">{{ item["desp"] }}</p>
-                </div>
-           </div>
+            <div class="media">
+              <div class="media-left media-middle">
+                <a href="#">
+                  <img class="media-object" src="{{ item["image"] }}" alt="...">
+                </a>
+              </div>
+              <div class="media-body">
+                <h5 class="media-heading">{{ item["title"] }}</h5>
+                 {{ item["desp"] }}
+              </div>
+            </div>
           {% end  %}
         </div>
 
-       <!--<a href="#" class="list-group-item">-->
-             <!--<div>-->
 
-             <!--</div>-->
-            <!--<h4 class="list-group-item-heading">{{ item["title"] }}</h4>-->
-            <!--<p class="list-group-item-text">{{ item["desp"] }}</p>-->
-        <!--</a>-->
    </div>
 </div>
 
