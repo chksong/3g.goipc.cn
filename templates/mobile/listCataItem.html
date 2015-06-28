@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% include nav_menu.html %}
+
+
+
+
+
+<!--产品信息-->
+<div class="container-fluid ">
+   <div class="row">
+
+       <!--路径导航-->
+        <ol class="goipc_nav_path breadcrumb">
+          <li><a href="#">{{ newsItem["brand"]}}</a></li>
+          <li><a href="#">{{ newsItem["cata"]}}</a></li>
+        </ol>
+
+        <!--标题-->
+        <div class="product_title"> {{ newsItem["title"]}}</div>
+        <div>
+            <span class="product_time">{{newsItem["addtime"]}}</span>  <span class="product_readtimes">访问{{newsItem["readtimes"]}}次</span>
+        </div>
+
+
+        <!--产品内容-->
+        <div class="panel">
+              <div class="panel-body">
+                {{ newsItem["context"]}}
+              </div>
+        </div>
+   </div>
+</div>
+
+
+
+{% end %}
+
+
+{% block footer %}
+  {% include FooterTel.html %}
+{% end %}
+{% block endJs  %}
+
+
+{% end %}
