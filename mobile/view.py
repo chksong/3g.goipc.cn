@@ -64,5 +64,5 @@ class ViewProduct(common.BaseHandle):
             return
 
         if 0 == rslt.count():
-            self.render("404.html")
+            self.render("e404.html")
 
