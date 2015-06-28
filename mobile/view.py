@@ -109,10 +109,14 @@ class ListBrand(common.BaseHandle):
         info_dict["brand"] = brand
 
         collection = self.db.project
-        rslt = collection.find({"brand" : brand},{"title":1,"desp":1,"image":1,"cata":1})
-        for item in rslt:
-            self.render("mobile/listBrandItem.html",brandItems =item, infodict=info_dict)
-            return ;
+        rslt = collection.find({"brand" : brand},{"title":1,"desp":1,"image":1,"cata":1}).limit(10)
 
         if 0 == rslt.count():
-            self.render("e404_why.html",why="分类品牌还不存在")
+            self.render("e404_why.html",why="品牌产品还不存在")
+
+        itembrands=[];
+        for item in rslt:
+           itembrands.append(item)
+
+        self.render("mobile/listBrandItem.html",brandItems =itembrands, infodict=info_dict)
+            return ;
