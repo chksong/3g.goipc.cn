@@ -113,10 +113,11 @@ class ListBrand(common.BaseHandle):
 
         if 0 == rslt.count():
             self.render("e404_why.html",why="品牌产品还不存在")
+            return
 
-        itembrands=[];
+        itembrands=[]
         for item in rslt:
            itembrands.append(item)
 
         self.render("mobile/listBrandItem.html",brandItems =itembrands, infodict=info_dict)
-            return ;
+
