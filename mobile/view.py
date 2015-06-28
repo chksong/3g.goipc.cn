@@ -41,7 +41,7 @@ class viewUS(common.BaseHandle):
 class ViewProduct(common.BaseHandle):
     def get(self, *args, **kwargs):
         if len(args) != 2:
-            self.render("e404_why.html",why="输入参数错误")
+            self.render("mobile/e404_why.html",why="输入参数错误")
 
         cata = args[0]
         title = args[1]
@@ -68,7 +68,7 @@ class ViewProduct(common.BaseHandle):
 class ListCata(common.BaseHandle):
     def get(self, *args, **kwargs):
         if len(args) != 1:
-            self.render("e404_why.html",why="输入参数错误")
+            self.render("mobile/e404_why.html",why="输入参数错误")
 
         cata = args[0]
 
@@ -99,7 +99,7 @@ class ListCata(common.BaseHandle):
 class ListBrand(common.BaseHandle):
    def get(self, *args, **kwargs):
         if len(args) != 1:
-            self.render("e404_why.html",why="输入参数错误")
+            self.render("mobile/e404_why.html",why="输入参数错误")
 
         brand = args[0]
 

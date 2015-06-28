@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}
+    404,Not Found
+{% end %}
+
+
+
+{% block body %}
+
+     <div class="container-fluid">
+       <div class="row">
+           <div class="">
+                <div class="panel panel-danger" data-toggle="collapse">
+                    <div class="panel-heading">
+                        <h3>请求的网页不存在</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="well well-large">
+                            {{ why }}
+                        </div>
+
+                        <input class="btn btn-default" type="button" value="跳转到首页"
+                               onclick="javascript:window.location.href='http://3g.goipc.cn' ">
+
+                        <input class="btn btn-default" type="button" value="返回历史"
+                               onclick="javascript:history.back() ">
+                    </div>
+                    <div class="panel-footer">
+                        <h5>北京国信智维科技有限公司Copyright©2013~2015 </h5>
+                        <br/>
+                            网站支持:root@goipc.cn
+                    </div>
+                </div>
+           </div>
+       </div>
+     </div>
+
+
+{% end %}

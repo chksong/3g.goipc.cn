@@ -30,7 +30,7 @@ define("port",default=20010,help="run on the given port", type=int)
 
 class ErrorHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
-        self.render("e404.html",)
+        self.render("mobile/e404.html",)
 
 
 class Application(tornado.web.Application):
