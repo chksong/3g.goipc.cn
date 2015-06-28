@@ -16,11 +16,13 @@
                     </div>
                     <div class="panel-body">
                         <div class="well well-large">
-                            页面没有找到，你可以返回
+                            {{ why }}
                         </div>
 
                         <input class="btn btn-default" type="button" value="跳转到首页"
                                onclick="javascript:window.location.href='http://3g.goipc.cn' ">
+                        <button class="btn btn-default" type="button" value="返回历史"
+                               onclick="javascript:history.back() ">
                     </div>
                     <div class="panel-footer">
                         <h5>北京国信智维科技有限公司Copyright©2013~2015 </h5>
