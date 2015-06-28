@@ -57,7 +57,7 @@ class ViewProduct(common.BaseHandle):
             item["keywords"]=strKeywords
 
             info_dict["keywords"] = strKeywords
-            info_dict["desp"] = item["desp"][:20]
+            info_dict["desp"] = item["desp"]
 
             self.render("mobile/product.html",newsItem =item, infodict=info_dict)
             return
@@ -117,6 +117,7 @@ class ListBrand(common.BaseHandle):
 
         itembrands=[]
         for item in rslt:
+           item["desp"] = item["desp"][:20]
            itembrands.append(item)
 
         self.render("mobile/listBrandItem.html",brandItems =itembrands, infodict=info_dict)
