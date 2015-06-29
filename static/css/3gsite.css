@@ -147,3 +147,11 @@ table {
     margin-top: 2px;
     margin-bottom: 1px;
 }
+
+.goipc_list-group-item {
+    padding-top:3px ;
+    padding-bottom:3px;
+    border-bottom: 1px dashed #2e6da4;
+    border-top: 0px;
+    margin-bottom: 2px;
+}
