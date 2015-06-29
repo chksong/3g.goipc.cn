@@ -53,5 +53,5 @@ class BaseHandle(tornado.web.RequestHandler, AdminMixin):
             return db_admin["name"]
 
     def error404(self, reason):
-        self.render("e404_why.html",why=reason)
+        self.render("mobile/e404_why.html",why=reason)
 
