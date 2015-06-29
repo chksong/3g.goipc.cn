@@ -18,30 +18,26 @@
           <li><a href="#">{{ infodict["cata"]}}</a></li>
         </ol>
 
-       <table class="table table-bordered ">
-                <thead>
-                    <tr>
-                        <th id="ckButton1">品牌名称</th>
-                        <th>产品型号</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                   {% for item in brands %}
-                    <tr>
-                        <td>
-                            <div class="bandname"> {{ escape(item["brand"]) }} </div>
-                        </td>
-                        <td>
-                             {% for cata in item["catalist"] %}
-                                <li class="cataItem" >{{ escape(cata) }}</li>
-                             {% end %}
-                        </td>
-                    </tr>
-                   {% end %}
-
-                </tbody>
-       </table>
+        <!--产品列表-->
+       <div class="band_cata_nav panel panel-info">
+          <div class="panel-body goipc_no_padding">
+                <div class="goipc_no_margin list-group">
+                    {% for item in arrCatas %}
+                    <div class="goipc_media media">
+                      <a href="/product/{{item["cata"]}}/{{item["title"]}}/">
+                      <div class="media-left media-middle">
+                          <img class="media-object" style="width: 80px; height: 60px;" src="{{ item["image"] }}"  alt="...">
+                      </div>
+                      <div class="media-body">
+                        <h5 class="media-heading">{{ item["title"] }} <span class="badge">{{ item["readtimes"] }}</span></h5>
+                        <small>{{ item["desp"] }}</small>
+                      </div>
+                      </a>
+                    </div>
+                    {% end  %}
+                </div>
+          </div>
+        </div>
 
    </div>
 </div>

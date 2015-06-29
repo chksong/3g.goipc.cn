@@ -91,7 +91,7 @@ class ListCata(common.BaseHandle):
         for item in rslt:
             itemcatas.append(item)
 
-        self.render("mobile/listCataItem.html",cataItem =itemcatas, infodict=info_dict)
+        self.render("mobile/listCataItem.html",arrCatas =itemcatas, infodict=info_dict)
 
 
 
