@@ -12,34 +12,44 @@
 <div class="container-fluid ">
    <div class="row">
 
-       <!--路径导航-->
-        <ol class="goipc_nav_path breadcrumb">
-          <li><a href="#">{{ infodict["brand"]}}</a></li>
-        </ol>
-
-
        <!-- 品牌分类-->
-        <div class="band_cata_nav  btn-group" role="group" aria-label="...">
-           {% for item in arrCatas %}
-           <button type="button" class="btn btn-default">{{ item["cataName"] }}</button>
-           {% end  %}
+       <div class="band_cata_nav panel panel-info">
+          <div class="panel-heading"><strong>{{ infodict["brand"]}}分类</strong></div>
+          <div class="panel-body goipc_no_padding">
+            <div class="goipc_no_margin list-group">
+               {% for item in arrCatas %}
+                <a href="#" class="list-group-item ">{{ item["cataName"] }}</a>
+               {% end  %}
+            </div>
+          </div>
         </div>
 
         <!--产品列表-->
+
+       <div class="band_cata_nav panel panel-info">
+          <div class="panel-heading"><strong>{{ infodict["brand"]}}产品列表</strong></div>
+          <div class="panel-body goipc_no_padding">
+                <div class="goipc_no_margin list-group">
+                    {% for item in brandItems %}
+                    <div class="goipc_media media">
+                      <div class="media-left media-middle">
+                        <a href="#">
+                          <img class="media-object" style="width: 80px; height: 60px;" src="{{ item["image"] }}"  alt="...">
+                        </a>
+                      </div>
+                      <div class="media-body">
+                        <h5 class="media-heading">{{ item["title"] }}</h5>
+                         {{ item["desp"] }}
+                      </div>
+                    </div>
+                    {% end  %}
+                </div>
+          </div>
+        </div>
+
+
         <div class="goipc_brandItems">
-          {% for item in brandItems %}
-            <div class="goipc_media media">
-              <div class="media-left media-middle">
-                <a href="#">
-                  <img class="media-object" style="width: 80px; height: 60px;" src="{{ item["image"] }}"  alt="...">
-                </a>
-              </div>
-              <div class="media-body">
-                <h5 class="media-heading">{{ item["title"] }}</h5>
-                 {{ item["desp"] }}
-              </div>
-            </div>
-          {% end  %}
+
         </div>
 
 

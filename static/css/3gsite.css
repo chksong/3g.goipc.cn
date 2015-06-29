@@ -137,3 +137,13 @@ table {
     margin-top: 4px;
     margin-bottom: 1px ;
 }
+
+.goipc_no_padding {
+    padding: 0px;
+}
+
+
+.goipc_no_margin {
+    margin-top: 2px;
+    margin-bottom: 1px;
+}
