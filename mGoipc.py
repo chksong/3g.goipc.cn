@@ -38,7 +38,9 @@ class HTTP404Error(tornado.web.ErrorHandler):
         tornado.web.ErrorHandler.initialize(self, 404)
 
     def prepare(self):
-        self.render("mobile/e404.html")
+        info_dict={}
+        info_dict["keywords"]=""
+        self.render("mobile/e404.html",infodict=info_dict)
 
 class Application(tornado.web.Application):
     def  __init__(self):
