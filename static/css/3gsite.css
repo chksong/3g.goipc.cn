@@ -4,6 +4,10 @@ body {
     padding-right: 1px;
 }
 
+a  {
+    color: #000000;
+}
+
 blockquote {
    border-left-color: rgb(85, 174, 117);
    font-size: 14px;
