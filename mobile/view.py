@@ -79,7 +79,7 @@ class ListCata(common.BaseHandle):
         itemcatas=[];
 
         collection = self.db.project
-        rslt = collection.find({"cata" : cata},{"title":1,"desp":1,"image":1,"brand":1})
+        rslt = collection.find({"cata" : cata},{"title":1,"desp":1,"image":1,"brand":1,"readtimes":1}).limit(10)
 
         if 0 == rslt.count():
             self.error404(reason="分类产品还不存在")
