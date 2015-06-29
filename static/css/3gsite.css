@@ -7,6 +7,10 @@ body {
 a  {
     color: #000000;
 }
+.bagde {
+    background-color: #4ABE5D;;
+}
+
 
 blockquote {
    border-left-color: rgb(85, 174, 117);

@@ -37,8 +37,8 @@
                           <img class="media-object" style="width: 80px; height: 60px;" src="{{ item["image"] }}"  alt="...">
                       </div>
                       <div class="media-body">
-                        <h5 class="media-heading">{{ item["title"] }} <span class="badge">{{ item["readtimes"] }}</span></h5>
-                         {{ item["desp"] }}
+                        <h5 class="media-heading">{{ item["title"] }} <span class="badge">{{ item["readtimes"] }}<</span></h5>
+                        <small>{{ item["desp"] }}</small>
                       </div>
                       </a>
                     </div>
@@ -68,6 +68,8 @@
   {% include footer.html %}
   {% include FooterTel.html %}
 {% end %}
+
+
 {% block endJs  %}
 
 
