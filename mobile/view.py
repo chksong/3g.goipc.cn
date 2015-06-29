@@ -127,5 +127,5 @@ class ListBrand(common.BaseHandle):
             if "cataItems" in item:
                 array_catas= item["cataItems"]
 
-        self.render("mobile/listBrandItem.html",brandItems =itembrands, infodict=info_dict)
+        self.render("mobile/listBrandItem.html",brandItems =itembrands,arrCatas= array_catas,infodict=info_dict)
 

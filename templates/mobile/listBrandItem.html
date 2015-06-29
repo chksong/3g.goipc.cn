@@ -19,10 +19,10 @@
 
 
        <!-- 品牌分类-->
-        <div class="btn-group" role="group" aria-label="...">
-          <button type="button" class="btn btn-default">Left</button>
-          <button type="button" class="btn btn-default">Middle</button>
-          <button type="button" class="btn btn-default">Right</button>
+        <div class="btn-group" role="group" aria-label="...">  arrCatas
+           {% for item in brandItems %}
+           <button type="button" class="btn btn-default">item["cataName"]</button>
+           {% end  %}
         </div>
 
         <!--产品列表-->
