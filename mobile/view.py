@@ -120,5 +120,12 @@ class ListBrand(common.BaseHandle):
            item["desp"] = item["desp"][:20]
            itembrands.append(item)
 
+        array_catas= []
+        collection = self.db.category
+        db_result = collection.find({"brandname":brandname},{"cataItems":1})
+        for item in db_result:
+            if "cataItems" in item:
+                array_catas= item["cataItems"]
+
         self.render("mobile/listBrandItem.html",brandItems =itembrands, infodict=info_dict)
 

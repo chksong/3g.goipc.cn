@@ -214,7 +214,7 @@ class editCataName(common.BaseHandle):
                        item_cata["Description"]= cata_item["Description"]
 
 
-        self.render("admin/category_cata_item.html",admin_user=admin_user, cataItem=item_cata)
+        self.render("admin/category_cata_Item.html",admin_user=admin_user, cataItem=item_cata)
 
 
     def post(self):
