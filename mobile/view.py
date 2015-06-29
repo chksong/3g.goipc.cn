@@ -68,7 +68,7 @@ class ViewProduct(common.BaseHandle):
 class ListCata(common.BaseHandle):
     def get(self, *args, **kwargs):
         if len(args) != 1:
-            self.render("mobile/e404_why.html",why="输入参数错误")
+            self.error404(reason="输入参数错误")
 
         cata = args[0]
 
@@ -82,7 +82,7 @@ class ListCata(common.BaseHandle):
         rslt = collection.find({"cata" : cata},{"title":1,"desp":1,"image":1,"brand":1})
 
         if 0 == rslt.count():
-            self.render("e404_why.html",why="分类产品还不存在")
+            self.error404(reason="分类产品还不存在")
             return
 
         info_dict["brand"] = rslt[0]["brand"]
@@ -99,7 +99,7 @@ class ListCata(common.BaseHandle):
 class ListBrand(common.BaseHandle):
    def get(self, *args, **kwargs):
         if len(args) != 1:
-            self.render("mobile/e404_why.html",why="输入参数错误")
+            self.error404(reason="输入参数错误")
 
         brand = args[0]
 
@@ -112,7 +112,7 @@ class ListBrand(common.BaseHandle):
         rslt = collection.find({"brand" : brand},{"title":1,"desp":1,"image":1,"cata":1}).limit(10)
 
         if 0 == rslt.count():
-            self.render("e404_why.html",why="品牌产品还不存在")
+            self.error404(reason="品牌产品还不存在")
             return
 
         itembrands=[]
