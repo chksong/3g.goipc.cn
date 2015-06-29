@@ -30,8 +30,15 @@ define("port",default=20010,help="run on the given port", type=int)
 
 class ErrorHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
-        self.render("mobile/e404.html",)
+        self.render("mobile/e404.html")
 
+
+class HTTP404Error(tornado.web.ErrorHandler):
+    def initialize(self):
+        tornado.web.ErrorHandler.initialize(self, 404)
+
+    def prepare(self):
+        self.render('404.html')
 
 class Application(tornado.web.Application):
     def  __init__(self):
@@ -45,7 +52,7 @@ class Application(tornado.web.Application):
 
 
 
-            (r"^$",ErrorHandler),
+            (r".*",HTTP404Error),
         ]
         setting =dict (
             blog_title=u"北京国信智维科技有限公司",
