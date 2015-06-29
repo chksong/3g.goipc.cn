@@ -40,6 +40,7 @@ class HTTP404Error(tornado.web.ErrorHandler):
     def prepare(self):
         info_dict={}
         info_dict["keywords"]=""
+        info_dict["desp"]=""
         self.render("mobile/e404.html",infodict=info_dict)
 
 class Application(tornado.web.Application):
