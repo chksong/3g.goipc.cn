@@ -116,7 +116,7 @@ class ListBrand(common.BaseHandle):
 
         itembrands=[]
         for item in rslt:
-           item["desp"] = item["desp"][:36]
+           item["desp"] = item["desp"]
            if not "readtimes" in item:
                item["readtimes"]= 1 ;
 
