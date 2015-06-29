@@ -122,7 +122,7 @@ class ListBrand(common.BaseHandle):
 
         array_catas= []
         collection = self.db.category
-        db_result = collection.find({"brandname":brandname},{"cataItems":1})
+        db_result = collection.find({"brandname":brand},{"cataItems":1})
         for item in db_result:
             if "cataItems" in item:
                 array_catas= item["cataItems"]
