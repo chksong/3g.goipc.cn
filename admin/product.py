@@ -78,7 +78,7 @@ class addProduct(common.BaseHandle):
         arrKeyWord = keywords.split(",")
 
         collection.insert({"title":name, "brand":brand, "cata":cata ,"addtime":addtime ,"keywords":arrKeyWord ,
-                           "desp":desp,"image":images, "context":context})
+                           "desp":desp,"image":images, "readtimes":1,"context":context})
 
         self.write({"content":"产品添加成功", "state":1 })
 

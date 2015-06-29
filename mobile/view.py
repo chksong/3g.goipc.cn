@@ -109,15 +109,17 @@ class ListBrand(common.BaseHandle):
         info_dict["brand"] = brand
 
         collection = self.db.project
-        rslt = collection.find({"brand" : brand},{"title":1,"desp":1,"image":1,"cata":1}).limit(10)
-
+        rslt = collection.find({"brand" : brand},{"title":1,"desp":1,"image":1,"cata":1,"readtimes":1}).limit(10)
         if 0 == rslt.count():
             self.error404(reason="品牌产品还不存在")
             return
 
         itembrands=[]
         for item in rslt:
-           item["desp"] = item["desp"][:20]
+           item["desp"] = item["desp"][:36]
+           if not "readtimes" in item:
+               item["readtimes"]= 1 ;
+
            itembrands.append(item)
 
         array_catas= []
