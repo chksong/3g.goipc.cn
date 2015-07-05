@@ -80,7 +80,7 @@ class ListCata(common.BaseHandle):
 
         collection = self.db.project
         rslt = collection.find({"cata" : cata},{"title":1,"desp":1,"image":1,"brand":1,"readtimes":1}).limit(10)\
-            .sort([("readtimes":-1)])
+            .sort([("readtimes",-1)])
 
         if 0 == rslt.count():
             self.error404(reason="分类产品还不存在")
@@ -111,7 +111,7 @@ class ListBrand(common.BaseHandle):
 
         collection = self.db.project
         rslt = collection.find({"brand" : brand},{"title":1,"desp":1,"image":1,"cata":1,"readtimes":1}).limit(10).\
-            .sort([("readtimes":-1)])
+            .sort([("readtimes",-1)])
         if 0 == rslt.count():
             self.error404(reason="品牌产品还不存在")
             return
