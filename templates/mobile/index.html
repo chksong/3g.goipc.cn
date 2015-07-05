@@ -6,37 +6,71 @@
 
 
 
-
-<!--产品推荐和分类推荐-->
-<div class="container-fluid goipc_recommend">
+<!--slider 产品-->
+<div class="container-fluid">
     <div class="row">
-         <div class="goipc_panel panel panel-info">
-              <div class="panel-heading">产品推荐
-                  <a href="#">
-                      <span style="float:right;" class="glyphicon glyphicon-refresh" aria-hidden="true">刷新</span>
-                  </a>
-              </div>
-              <!-- Table -->
 
-             <table class="table table-bordered ">
-                 <tbody>
-                     <tr>
-                         <td><a href="/product/研华工控整机/研华原装机IPC-610H/">研华原装机IPC-610H</a>  </td>
-                         <td><a href="/product/研华工控整机/研华IPC-610MB-L原装机">研华IPC-610MB-L原装机</a></td>
-                     </tr>
-                     <tr>
-                         <td>研华PCA-6011主板</td>
-                         <td>研华IPPC-6152A平板</td>
-                     </tr>
-                     <tr>
-                         <td>凌华工控整机RK-610</td>
-                         <td><研华IPC-610M原装机</td>
-                     </tr>
-                 </tbody>
-             </table>
-          </div>
+         <div class="bs-example" >
+             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+              </ol>
+
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+                <div class="item  active" align="center">
+                  <img  style="width:240px; height:150px;" src="http://3g.goipc.cn/static/upload/image/2015-06-25/254374-IPC-610H.jpg" alt="...">
+                  <div class="carousel-caption">
+                     研华原装机IPC-610H
+                  </div>
+                </div>
+
+                <div class="item"  align="center">
+                  <a href="/product/研华CPU卡式工业主板/研华卡式主板PCA-6010/">
+                  <img style="width:240px; height:150px;" src="/static/upload/file/2015-07-04/115632-PCA-6010.jpg" alt="...">
+                  <div class="carousel-caption">
+                    研华卡式主板PCA-6010
+                  </div>
+                  </a>
+                </div>
+
+                <div class="item"  align="center" >
+                  <img style="width:240px; height:150px;" src="http://3g.goipc.cn/static/upload/file/2015-06-25/823961-ipc-610MB-L.jpg" alt="...">
+                  <div class="carousel-caption">
+                    研华IPC-610MB-L原装机
+                  </div>
+                </div>
+
+                 <div class="item"  align="center">
+                  <img style="width:240px; height:150px;" src="http://3g.goipc.cn/static/upload/file/2015-07-02/814337-IPC-6606.gif" alt="...">
+                  <div class="carousel-caption">
+                    研华6槽小机箱IPC-6606
+                  </div>
+                </div>
+
+
+              </div>
+
+              <!-- Controls -->
+              <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+         </div>
+
     </div>
 </div>
+
+
 
 <!--推荐栏目-->
 <div class="container-fluid ">
@@ -75,7 +109,7 @@
         <div class="goipc_panel panel panel-info">
               <div class="panel-heading">
                   公司介绍
-                  <a href="/us/公司简介">
+                  <a href="/us/公司简介/">
                       <span style="float:right;" class="glyphicon glyphicon-link" aria-hidden="true">详细</span>
                   </a>
               </div>
