@@ -47,11 +47,11 @@ class Application(tornado.web.Application):
     def  __init__(self):
         handlers = [
             (r"/",home.index ),
-            (r"^/us/(.*)/", view.viewUS),
+            (r"^/us/(.*).?$", view.viewUS),
 
-            (r"^/brand/(.*)/", view.ListBrand),
-            (r"^/cata/(.*)/", view.ListCata),
-            (r"^/product/(.*)/(.*)/", view.ViewProduct),
+            (r"^/brand/(.*).?$", view.ListBrand),
+            (r"^/cata/(.*).?$", view.ListCata),
+            (r"^/product/(.*)/(.*).?$", view.ViewProduct),
 
 
 
